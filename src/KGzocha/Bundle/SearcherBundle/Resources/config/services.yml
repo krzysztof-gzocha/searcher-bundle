@@ -1,0 +1,7 @@
+kgzocha.searcher_bundle.event_dispatcher:
+  class: \KGzocha\Bundle\SearcherBundle\Event\EventDispatcher\EventDispatcher
+  arguments:
+    - @event_dispatcher
+
+kgzocha.searcher_bundle.parameter_generator:
+  class: KGzocha\Searcher\ParameterGenerator\ParameterGenerator
