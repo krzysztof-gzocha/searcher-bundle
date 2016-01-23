@@ -2,6 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Event\EventDispatcher;
 
+use KGzocha\Bundle\SearcherBundle\Event\SearcherEventAdapter;
 use KGzocha\Searcher\Event\SearcherEventInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyDispatcherInterface;
 use KGzocha\Searcher\Event\Dispatcher\EventDispatcherInterface;
@@ -10,7 +11,7 @@ use KGzocha\Searcher\Event\Dispatcher\EventDispatcherInterface;
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\Event\EventDispatcher
  */
-class EventDispatcher implements EventDispatcherInterface
+class EventDispatcherAdapter implements EventDispatcherInterface
 {
     /**
      * @var SymfonyDispatcherInterface
@@ -31,6 +32,20 @@ class EventDispatcher implements EventDispatcherInterface
      */
     public function dispatch($name, SearcherEventInterface $event)
     {
-        $this->symfonyDispatcher->dispatch($name, $event);
+        $this->symfonyDispatcher->dispatch(
+            $name,
+            $this->adaptSearcherEvent($name, $event)
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param SearcherEventInterface $event
+     *
+     * @return SearcherEventAdapter
+     */
+    private function adaptSearcherEvent($name, SearcherEventInterface $event)
+    {
+        return new SearcherEventAdapter($name, $event);
     }
 }
