@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8b89943eecacf6d1d3d23aa0c03065af",
-    "content-hash": "b31ac3dab8eead5aad9a9df7febc7f0c",
+    "hash": "a96e7edbade5af853a414e9e25d6bc04",
+    "content-hash": "740fe627fbdbe0e35356bffd9239cfc6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -452,12 +452,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krzysztof-gzocha/searcher.git",
-                "reference": "f8db780efdcbb075c7f9397f01aecc0e270da906"
+                "reference": "6485a9ae505f8ac2c765af9723985fe4d8e4284a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krzysztof-gzocha/searcher/zipball/f8db780efdcbb075c7f9397f01aecc0e270da906",
-                "reference": "f8db780efdcbb075c7f9397f01aecc0e270da906",
+                "url": "https://api.github.com/repos/krzysztof-gzocha/searcher/zipball/6485a9ae505f8ac2c765af9723985fe4d8e4284a",
+                "reference": "6485a9ae505f8ac2c765af9723985fe4d8e4284a",
                 "shasum": ""
             },
             "require": {
@@ -490,7 +490,7 @@
                 "source": "https://github.com/krzysztof-gzocha/searcher/tree/master",
                 "issues": "https://github.com/krzysztof-gzocha/searcher/issues"
             },
-            "time": "2016-01-19 16:37:48"
+            "time": "2016-01-23 14:43:17"
         },
         {
             "name": "paragonie/random_compat",
@@ -593,12 +593,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-apcu.git",
-                "reference": "85fe388210bfabd43fb72d145b40c548089df44f"
+                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/85fe388210bfabd43fb72d145b40c548089df44f",
-                "reference": "85fe388210bfabd43fb72d145b40c548089df44f",
+                "url": "https://api.github.com/repos/symfony/polyfill-apcu/zipball/d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
+                "reference": "d1911e6caeb4b6a4c8e2d5c46b978a66b3745e4c",
                 "shasum": ""
             },
             "require": {
@@ -607,7 +607,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -641,7 +641,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-11 10:06:23"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-intl-icu",
@@ -649,12 +649,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-icu.git",
-                "reference": "6b8efa3e159e2f6b58c2c6a173015b117b7e767e"
+                "reference": "66b0bb4abda229bc073eff6bbc8f2685bdaac165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-icu/zipball/6b8efa3e159e2f6b58c2c6a173015b117b7e767e",
-                "reference": "6b8efa3e159e2f6b58c2c6a173015b117b7e767e",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-icu/zipball/66b0bb4abda229bc073eff6bbc8f2685bdaac165",
+                "reference": "66b0bb4abda229bc073eff6bbc8f2685bdaac165",
                 "shasum": ""
             },
             "require": {
@@ -664,7 +664,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -696,7 +696,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -704,12 +704,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4"
+                "reference": "1289d16209491b584839022f29257ad859b8532d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d7f01c96a4dde264682cf36c28e62086c77a09d4",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "reference": "1289d16209491b584839022f29257ad859b8532d",
                 "shasum": ""
             },
             "require": {
@@ -721,7 +721,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -755,7 +755,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -763,12 +763,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php54.git",
-                "reference": "2fc6510fe668493fe6a6ed6c61e03fea88f0ef6b"
+                "reference": "74663d5a2ff3c530c1bc0571500e0feec9094054"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php54/zipball/2fc6510fe668493fe6a6ed6c61e03fea88f0ef6b",
-                "reference": "2fc6510fe668493fe6a6ed6c61e03fea88f0ef6b",
+                "url": "https://api.github.com/repos/symfony/polyfill-php54/zipball/74663d5a2ff3c530c1bc0571500e0feec9094054",
+                "reference": "74663d5a2ff3c530c1bc0571500e0feec9094054",
                 "shasum": ""
             },
             "require": {
@@ -777,7 +777,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -813,7 +813,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -821,12 +821,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php55.git",
-                "reference": "3bd7c6c6fe7cfa07d1df9aaef799c559433a23ac"
+                "reference": "b4f3f07d91702f8f926339fc4fcf81671d8c27e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php55/zipball/3bd7c6c6fe7cfa07d1df9aaef799c559433a23ac",
-                "reference": "3bd7c6c6fe7cfa07d1df9aaef799c559433a23ac",
+                "url": "https://api.github.com/repos/symfony/polyfill-php55/zipball/b4f3f07d91702f8f926339fc4fcf81671d8c27e6",
+                "reference": "b4f3f07d91702f8f926339fc4fcf81671d8c27e6",
                 "shasum": ""
             },
             "require": {
@@ -836,7 +836,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -869,7 +869,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -877,12 +877,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php56.git",
-                "reference": "00a7781ba12cc2d0f303a845af4d0b7c91f85f07"
+                "reference": "4d891fff050101a53a4caabb03277284942d1ad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/00a7781ba12cc2d0f303a845af4d0b7c91f85f07",
-                "reference": "00a7781ba12cc2d0f303a845af4d0b7c91f85f07",
+                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/4d891fff050101a53a4caabb03277284942d1ad9",
+                "reference": "4d891fff050101a53a4caabb03277284942d1ad9",
                 "shasum": ""
             },
             "require": {
@@ -892,7 +892,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -925,7 +925,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -933,12 +933,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php70.git",
-                "reference": "6b102ca141ae58782bfa93a781876c69bfde7ef5"
+                "reference": "8428ceddbbaf102f2906769a8ef2438220c5cb95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/6b102ca141ae58782bfa93a781876c69bfde7ef5",
-                "reference": "6b102ca141ae58782bfa93a781876c69bfde7ef5",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/8428ceddbbaf102f2906769a8ef2438220c5cb95",
+                "reference": "8428ceddbbaf102f2906769a8ef2438220c5cb95",
                 "shasum": ""
             },
             "require": {
@@ -948,7 +948,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -984,7 +984,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-15 10:29:03"
+            "time": "2016-01-25 08:44:42"
         },
         {
             "name": "symfony/polyfill-util",
@@ -992,12 +992,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-util.git",
-                "reference": "3c73bcdad66642261a08921ca19a78525feb3673"
+                "reference": "8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/3c73bcdad66642261a08921ca19a78525feb3673",
-                "reference": "3c73bcdad66642261a08921ca19a78525feb3673",
+                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4",
+                "reference": "8de62801aa12bc4dfcf85eef5d21981ae7bb3cc4",
                 "shasum": ""
             },
             "require": {
@@ -1006,7 +1006,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -1036,7 +1036,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/security-acl",
@@ -1105,19 +1105,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "295f5ee6264c843a49e6bff27c90e6783ea0921f"
+                "reference": "5f5f4aa4cf74ea96e3284f9ae41f0640d0dab9de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/295f5ee6264c843a49e6bff27c90e6783ea0921f",
-                "reference": "295f5ee6264c843a49e6bff27c90e6783ea0921f",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5f5f4aa4cf74ea96e3284f9ae41f0640d0dab9de",
+                "reference": "5f5f4aa4cf74ea96e3284f9ae41f0640d0dab9de",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": "~2.4",
                 "php": ">=5.3.9",
                 "psr/log": "~1.0",
-                "symfony/polyfill-apcu": "~1.0,>=1.0.2",
+                "symfony/polyfill-apcu": "~1.1",
                 "symfony/polyfill-intl-icu": "~1.0",
                 "symfony/polyfill-mbstring": "~1.0",
                 "symfony/polyfill-php54": "~1.0",
@@ -1231,7 +1231,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-01-21 09:35:25"
+            "time": "2016-01-27 16:22:37"
         },
         {
             "name": "twig/twig",
@@ -1239,12 +1239,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "aad9ebadbec3e97073ec71f03667d2662b99337a"
+                "reference": "892302f8487147f8aee6a2554349c7955894f046"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/aad9ebadbec3e97073ec71f03667d2662b99337a",
-                "reference": "aad9ebadbec3e97073ec71f03667d2662b99337a",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/892302f8487147f8aee6a2554349c7955894f046",
+                "reference": "892302f8487147f8aee6a2554349c7955894f046",
                 "shasum": ""
             },
             "require": {
@@ -1293,7 +1293,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-19 12:30:57"
+            "time": "2016-01-27 05:49:29"
         }
     ],
     "packages-dev": [
@@ -1303,12 +1303,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "02e5b61baedbeb1832702d0feac3174e70c32c74"
+                "reference": "625dd63568e386e11c01022c22e50adc2a8a7af6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/02e5b61baedbeb1832702d0feac3174e70c32c74",
-                "reference": "02e5b61baedbeb1832702d0feac3174e70c32c74",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/625dd63568e386e11c01022c22e50adc2a8a7af6",
+                "reference": "625dd63568e386e11c01022c22e50adc2a8a7af6",
                 "shasum": ""
             },
             "require": {
@@ -1366,7 +1366,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-01-15 14:39:01"
+            "time": "2016-01-23 14:29:18"
         },
         {
             "name": "doctrine/instantiator",
@@ -1504,12 +1504,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "957ab471ef4b60669dc6d0e283411e33deec8c0a"
+                "reference": "453ef86b8c499b05fefe9b67347b8b9c06e3f176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/957ab471ef4b60669dc6d0e283411e33deec8c0a",
-                "reference": "957ab471ef4b60669dc6d0e283411e33deec8c0a",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/453ef86b8c499b05fefe9b67347b8b9c06e3f176",
+                "reference": "453ef86b8c499b05fefe9b67347b8b9c06e3f176",
                 "shasum": ""
             },
             "require": {
@@ -1580,7 +1580,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2016-01-17 17:27:46"
+            "time": "2016-01-24 18:35:45"
         },
         {
             "name": "doctrine/orm",
@@ -1588,12 +1588,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "a4d84e0cd8cc4ea1b99f4fd7d1d560f3fbe27c30"
+                "reference": "788143dc0313c7522820ebf6057f73881e7190a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/a4d84e0cd8cc4ea1b99f4fd7d1d560f3fbe27c30",
-                "reference": "a4d84e0cd8cc4ea1b99f4fd7d1d560f3fbe27c30",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/788143dc0313c7522820ebf6057f73881e7190a3",
+                "reference": "788143dc0313c7522820ebf6057f73881e7190a3",
                 "shasum": ""
             },
             "require": {
@@ -1659,7 +1659,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2016-01-16 16:29:49"
+            "time": "2016-01-26 22:00:55"
         },
         {
             "name": "pdepend/pdepend",
@@ -1707,12 +1707,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phingofficial/phing.git",
-                "reference": "bf8e66aeb5b184f436bd18da9d246e0aeeb355a1"
+                "reference": "e537af8a423b013238d7d9c57cf6d2e8cac3bd0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phingofficial/phing/zipball/bf8e66aeb5b184f436bd18da9d246e0aeeb355a1",
-                "reference": "bf8e66aeb5b184f436bd18da9d246e0aeeb355a1",
+                "url": "https://api.github.com/repos/phingofficial/phing/zipball/e537af8a423b013238d7d9c57cf6d2e8cac3bd0c",
+                "reference": "e537af8a423b013238d7d9c57cf6d2e8cac3bd0c",
                 "shasum": ""
             },
             "require": {
@@ -1789,7 +1789,7 @@
                 "task",
                 "tool"
             ],
-            "time": "2016-01-18 16:15:09"
+            "time": "2016-01-26 22:37:22"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
