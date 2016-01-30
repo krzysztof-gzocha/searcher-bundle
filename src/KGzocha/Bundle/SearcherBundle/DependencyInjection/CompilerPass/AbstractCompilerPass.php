@@ -1,6 +1,7 @@
 <?php
 
 namespace KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass;
+
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 
 /**

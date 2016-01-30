@@ -31,7 +31,8 @@
     "phing/phing": "^2.13@dev",
     "phpmd/phpmd": "dev-master",
     "doctrine/orm": "^2.0",
-    "doctrine/mongodb-odm": "^1.0"
+    "doctrine/mongodb-odm": "^1.0",
+    "fabpot/php-cs-fixer": "dev-master"
   },
   "repositories": [
     {
