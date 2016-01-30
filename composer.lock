@@ -452,12 +452,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krzysztof-gzocha/searcher.git",
-                "reference": "6485a9ae505f8ac2c765af9723985fe4d8e4284a"
+                "reference": "a51478d65899c9cd0ce99b660d6c88ee2d98487b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krzysztof-gzocha/searcher/zipball/6485a9ae505f8ac2c765af9723985fe4d8e4284a",
-                "reference": "6485a9ae505f8ac2c765af9723985fe4d8e4284a",
+                "url": "https://api.github.com/repos/krzysztof-gzocha/searcher/zipball/a51478d65899c9cd0ce99b660d6c88ee2d98487b",
+                "reference": "a51478d65899c9cd0ce99b660d6c88ee2d98487b",
                 "shasum": ""
             },
             "require": {
@@ -490,7 +490,7 @@
                 "source": "https://github.com/krzysztof-gzocha/searcher/tree/master",
                 "issues": "https://github.com/krzysztof-gzocha/searcher/issues"
             },
-            "time": "2016-01-23 14:43:17"
+            "time": "2016-01-30 09:02:58"
         },
         {
             "name": "paragonie/random_compat",
@@ -937,7 +937,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/8428ceddbbaf102f2906769a8ef2438220c5cb95",
+                "url": "https://api.github.com/repos/symfony/polyfill-php70/zipball/386c1be9cad3ab531425211919e78c37971be4ce",
                 "reference": "8428ceddbbaf102f2906769a8ef2438220c5cb95",
                 "shasum": ""
             },
@@ -1109,7 +1109,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/5f5f4aa4cf74ea96e3284f9ae41f0640d0dab9de",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/5dd453fa267328ad9f1a2842c18698d79547ce5a",
                 "reference": "5f5f4aa4cf74ea96e3284f9ae41f0640d0dab9de",
                 "shasum": ""
             },
@@ -2629,7 +2629,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/913401df809e99e4f47b27cdd781f4a258d58791",
+                "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/7ff5b1b3dcc55b8ab8ae61ef99d4730940856ee7",
                 "reference": "913401df809e99e4f47b27cdd781f4a258d58791",
                 "shasum": ""
             },
