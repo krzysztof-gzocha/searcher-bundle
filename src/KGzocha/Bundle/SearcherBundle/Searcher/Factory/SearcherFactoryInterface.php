@@ -1,9 +1,9 @@
 <?php
+
 namespace KGzocha\Bundle\SearcherBundle\Searcher\Factory;
 
-use KGzocha\Searcher\FilterImposer\FilterImposerInterface;
+use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
 use KGzocha\Searcher\Searcher\Searcher;
-use KGzocha\Searcher\Searcher\SearcherInterface;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
@@ -12,12 +12,11 @@ use KGzocha\Searcher\Searcher\SearcherInterface;
 interface SearcherFactoryInterface
 {
     /**
-     * @return SearcherInterface
+     * @param FilterImposerCollectionInterface $filterImposerCollection
+     *
+     * @return Searcher
      */
-    public function build();
-
-    /**
-     * @param FilterImposerInterface $filterImposer
-     */
-    public function addFilterImposer(FilterImposerInterface $filterImposer);
+    public function build(
+        FilterImposerCollectionInterface $filterImposerCollection
+    );
 }

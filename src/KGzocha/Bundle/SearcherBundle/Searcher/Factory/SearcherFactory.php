@@ -15,11 +15,6 @@ use KGzocha\Searcher\Searcher\Searcher;
 class SearcherFactory implements SearcherFactoryInterface
 {
     /**
-     * @var FilterImposerCollectionInterface
-     */
-    private $filterImposerCollection;
-
-    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -30,26 +25,18 @@ class SearcherFactory implements SearcherFactoryInterface
     public function __construct(
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->filterImposerCollection = new FilterImposerCollection([]);
         $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @inheritdoc
      */
-    public function build()
-    {
+    public function build(
+        FilterImposerCollectionInterface $filterImposerCollection
+    ) {
         return new Searcher(
-            $this->filterImposerCollection,
+            $filterImposerCollection,
             $this->eventDispatcher
         );
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function addFilterImposer(FilterImposerInterface $filterImposer)
-    {
-        $this->filterImposerCollection->addFilterImposer($filterImposer);
     }
 }
