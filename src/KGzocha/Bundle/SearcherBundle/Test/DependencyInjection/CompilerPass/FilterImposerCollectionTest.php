@@ -2,14 +2,14 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\NamedFilterModelCollection;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\FilterImposerCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass
  */
-class NamedFilterModelCollectionTest extends \PHPUnit_Framework_TestCase
+class FilterImposerCollectionTest extends \PHPUnit_Framework_TestCase
 {
     const NAMED_COLLECTION = 'NamedCollection';
     const COLLECTION_TAG = 'collection_tag';
@@ -39,7 +39,7 @@ class NamedFilterModelCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(
             $container
                 ->getDefinition(self::NAMED_COLLECTION)
-                ->hasMethodCall('addNamedFilterModel')
+                ->hasMethodCall('addFilterImposer')
         );
     }
 
@@ -48,7 +48,7 @@ class NamedFilterModelCollectionTest extends \PHPUnit_Framework_TestCase
      */
     protected function process(ContainerBuilder $container)
     {
-        $pass = new NamedFilterModelCollection(
+        $pass = new FilterImposerCollection(
             self::COLLECTION_TAG, self::MODEL_TAG, self::CONTEXT_ID
         );
         $pass->process($container);

@@ -7,43 +7,41 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * This compiler pass will search for service configurations of NamedFilterModelCollection
- * in order to populate them with corresponding FilterModels
+ * Will search for services tagged with appropriate tag and populate them
+ * with corresponding FilterImposers.
  *
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass
  */
-class NamedFilterModelCollection extends AbstractCompilerPass
+class FilterImposerCollection extends AbstractCompilerPass
 {
-    const MODEL_NAME = 'modelName';
-
     /**
-     * @var string name of a tag for FilterModelCollection
+     * @var string
      */
-    private $filterModelCollectionTag;
+    private $collectionTag;
 
     /**
-     * @var string name of a tag for FilterModel
+     * @var string
      */
-    private $filterModelTag;
+    private $imposerTag;
 
     /**
-     * @var string name of a context parameter
+     * @var string
      */
     private $contextParameterName;
 
     /**
-     * @param string $filterModelCollectionTag
-     * @param string $filterModelTag
+     * @param string $collectionTag
+     * @param string $imposerTag
      * @param string $contextParameterName
      */
     public function __construct(
-        $filterModelCollectionTag,
-        $filterModelTag,
+        $collectionTag,
+        $imposerTag,
         $contextParameterName
     ) {
-        $this->filterModelCollectionTag = $filterModelCollectionTag;
-        $this->filterModelTag = $filterModelTag;
+        $this->collectionTag = $collectionTag;
+        $this->imposerTag = $imposerTag;
         $this->contextParameterName = $contextParameterName;
     }
 
@@ -52,16 +50,16 @@ class NamedFilterModelCollection extends AbstractCompilerPass
      */
     public function process(ContainerBuilder $container)
     {
-        $filterModelCollections = $container
-            ->findTaggedServiceIds($this->filterModelCollectionTag);
+        $collections = $container
+            ->findTaggedServiceIds($this->collectionTag);
 
-        foreach ($filterModelCollections as $definitionName => $filterModelCollection) {
+        foreach ($collections as $collectionName => $collection) {
             $contextId = $this->getValueFromLastKey(
-                $filterModelCollection,
+                $collection,
                 $this->contextParameterName
             );
             $collectionDefinition = $container
-                ->findDefinition($definitionName);
+                ->findDefinition($collectionName);
 
             $this->addModelsToCollection(
                 $container,
@@ -81,11 +79,11 @@ class NamedFilterModelCollection extends AbstractCompilerPass
         Definition $collectionDefinition,
         $collectionContextId
     ) {
-        $models = $container->findTaggedServiceIds($this->filterModelTag);
+        $models = $container->findTaggedServiceIds($this->imposerTag);
 
         if (0 === count($models)) {
             throw new \RuntimeException(sprintf(
-                'There is no FilterModels to be injected with contextId "%s"',
+                'There is no FilterImposers to be injected with contextId "%s"',
                 $collectionContextId
             ));
         }
@@ -101,11 +99,8 @@ class NamedFilterModelCollection extends AbstractCompilerPass
             }
 
             $collectionDefinition->addMethodCall(
-                'addNamedFilterModel',
-                [
-                    $this->getValueFromLastKey($model, self::MODEL_NAME),
-                    new Reference($definitionName)
-                ]
+                'addFilterImposer',
+                [new Reference($definitionName)]
             );
         }
     }
