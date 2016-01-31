@@ -3,9 +3,7 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearcherFactoryCompilerPass;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\SearcherBundleExtension;
-use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection;
-use KGzocha\Searcher\Searcher\Searcher;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -61,9 +59,8 @@ class SearcherFactoryCompilerPassTest extends \PHPUnit_Framework_TestCase
             'event_dispatcher' => $dispatcher,
         ]);
 
-        $extension = new SearcherBundleExtension();
+        $extension = new KGzochaSearcherExtension();
         $container->registerExtension($extension);
-        $container->loadFromExtension('searcher_bundle');
         $extension->load([], $container);
 
         return $container;

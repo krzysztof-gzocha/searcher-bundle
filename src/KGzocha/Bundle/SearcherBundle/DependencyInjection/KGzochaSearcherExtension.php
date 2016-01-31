@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\DependencyInjection
  */
-class SearcherBundleExtension extends Extension
+class KGzochaSearcherExtension extends Extension
 {
     /**
      * @inheritDoc
