@@ -81,7 +81,6 @@ class SearcherFactoryCompilerPass extends AbstractCompilerPass
 
             $container
                 ->getDefinition($factoryName)
-                ->setClass('KGzocha\Searcher\Searcher\Searcher')
                 ->setFactory([
                     new Reference(self::SEARCHER_FACTORY_SERVICE),
                     'build'
