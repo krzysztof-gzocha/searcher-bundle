@@ -12,11 +12,11 @@ use KGzocha\Searcher\Searcher\Searcher;
 interface SearcherFactoryInterface
 {
     /**
-     * @param FilterImposerCollectionInterface $filterImposerCollection
+     * @param FilterImposerCollectionInterface $imposerCollection
      *
      * @return Searcher
      */
     public function build(
-        FilterImposerCollectionInterface $filterImposerCollection
+        FilterImposerCollectionInterface $imposerCollection
     );
 }

@@ -32,10 +32,10 @@ class SearcherFactory implements SearcherFactoryInterface
      * @inheritdoc
      */
     public function build(
-        FilterImposerCollectionInterface $filterImposerCollection
+        FilterImposerCollectionInterface $imposerCollection
     ) {
         return new Searcher(
-            $filterImposerCollection,
+            $imposerCollection,
             $this->eventDispatcher
         );
     }
