@@ -29,9 +29,7 @@
         <exec executable="./bin/phpmd" checkreturn="true" passthru="true">
             <arg value="src/"/>
             <arg value="text"/>
-            <arg value="cleancode,codesize,controversial,design,unusedcode"/>
-            <arg value="--exclude"/>
-            <arg value="src/KGzocha/Searcher/Test"/>
+            <arg value="cleancode,codesize,controversial,design,naming,unusedcode"/>
         </exec>
     </target>
 

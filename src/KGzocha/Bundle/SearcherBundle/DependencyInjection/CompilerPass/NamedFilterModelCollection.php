@@ -20,7 +20,7 @@ class NamedFilterModelCollection extends AbstractCompilerPass
     /**
      * @var string name of a tag for FilterModelCollection
      */
-    private $filterModelCollectionTag;
+    private $modelCollectionTag;
 
     /**
      * @var string name of a tag for FilterModel
@@ -33,16 +33,16 @@ class NamedFilterModelCollection extends AbstractCompilerPass
     private $contextParameterName;
 
     /**
-     * @param string $filterModelCollectionTag
+     * @param string $modelCollectionTag
      * @param string $filterModelTag
      * @param string $contextParameterName
      */
     public function __construct(
-        $filterModelCollectionTag,
+        $modelCollectionTag,
         $filterModelTag,
         $contextParameterName
     ) {
-        $this->filterModelCollectionTag = $filterModelCollectionTag;
+        $this->modelCollectionTag = $modelCollectionTag;
         $this->filterModelTag = $filterModelTag;
         $this->contextParameterName = $contextParameterName;
     }
@@ -52,12 +52,12 @@ class NamedFilterModelCollection extends AbstractCompilerPass
      */
     public function process(ContainerBuilder $container)
     {
-        $filterModelCollections = $container
-            ->findTaggedServiceIds($this->filterModelCollectionTag);
+        $modelCollections = $container
+            ->findTaggedServiceIds($this->modelCollectionTag);
 
-        foreach ($filterModelCollections as $definitionName => $filterModelCollection) {
+        foreach ($modelCollections as $definitionName => $modelCollection) {
             $contextId = $this->getValueFromLastKey(
-                $filterModelCollection,
+                $modelCollection,
                 $this->contextParameterName
             );
             $collectionDefinition = $container
