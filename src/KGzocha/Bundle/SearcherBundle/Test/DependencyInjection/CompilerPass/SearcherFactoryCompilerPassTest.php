@@ -31,7 +31,7 @@ class SearcherFactoryCompilerPassTest extends \PHPUnit_Framework_TestCase
 
         $imposerCollection = new Definition();
         $imposerCollection
-            ->setClass(FilterImposerCollection::class)
+            ->setClass('KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection')
             ->addTag(self::IMPOSER_COLLECTION_TAG, [
                 self::CONTEXT_ID_NAME => 'someSearch',
             ]);
@@ -44,7 +44,7 @@ class SearcherFactoryCompilerPassTest extends \PHPUnit_Framework_TestCase
 
         $this->process($container);
         $this->assertInstanceOf(
-            Searcher::class,
+            'KGzocha\Searcher\Searcher\Searcher',
             $container->get('searcher_service_name')
         );
     }
@@ -56,7 +56,7 @@ class SearcherFactoryCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
 
-        $dispatcher = new Definition(EventDispatcher::class);
+        $dispatcher = new Definition('Symfony\Component\EventDispatcher\EventDispatcher');
         $container->addDefinitions([
             'event_dispatcher' => $dispatcher,
         ]);
