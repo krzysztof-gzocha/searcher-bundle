@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Form;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\NamedFilterModelCollection;
+use KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
