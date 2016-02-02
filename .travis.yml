@@ -2,8 +2,10 @@ language: php
 sudo: false
 
 cache:
+  apt: true
   directories:
     - vendor
+    - bin
     - $HOME/.composer/cache
 
 php:
