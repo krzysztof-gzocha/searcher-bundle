@@ -1,5 +1,11 @@
 language: php
 sudo: false
+
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
 php:
   - '5.4'
   - '5.5'
@@ -9,7 +15,7 @@ php:
   - nightly
 
 before_script:
-  - composer install --ignore-platform-reqs --dev --prefer-source --no-interaction
+  - composer install --ignore-platform-reqs --dev --prefer-dist --no-interaction
 
 script:
   - bin/phing run-tests
