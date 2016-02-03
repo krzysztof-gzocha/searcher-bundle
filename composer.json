@@ -28,8 +28,8 @@
     "krzysztof-gzocha/searcher": "dev-master"
   },
   "require-dev": {
-    "phpunit/phpunit": "dev-master",
-    "phing/phing": "dev-master",
+    "phpunit/phpunit": "4.8.10",
+    "phing/phing": "^2.13@dev",
     "phpmd/phpmd": "dev-master",
     "doctrine/orm": "dev-master",
     "doctrine/mongodb-odm": "dev-master",
