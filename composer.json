@@ -24,16 +24,16 @@
   },
   "require":{
     "php": ">=5.4",
-    "symfony/symfony": "^2.0",
-    "krzysztof-gzocha/searcher": "dev-master@dev"
+    "symfony/symfony": "^2.3",
+    "krzysztof-gzocha/searcher": "dev-master"
   },
   "require-dev": {
-    "phpunit/phpunit": "4.8.10",
-    "phing/phing": "^2.13@dev",
+    "phpunit/phpunit": "dev-master",
+    "phing/phing": "dev-master",
     "phpmd/phpmd": "dev-master",
-    "doctrine/orm": "^2.0",
-    "doctrine/mongodb-odm": "^1.0",
-    "knplabs/knp-paginator-bundle": "^2.5",
+    "doctrine/orm": "dev-master",
+    "doctrine/mongodb-odm": "dev-master",
+    "knplabs/knp-paginator-bundle": "dev-master",
     "fabpot/php-cs-fixer": "dev-master"
   },
   "repositories": [
