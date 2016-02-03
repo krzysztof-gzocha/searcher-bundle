@@ -1,6 +1,6 @@
 services:
   kgzocha.searcher_bundle.event_dispatcher:
-    class: \KGzocha\Bundle\SearcherBundle\Event\EventDispatcher\EventDispatcherAdapter
+    class: KGzocha\Bundle\SearcherBundle\Event\EventDispatcher\EventDispatcherAdapter
     arguments:
       - @event_dispatcher
 
