@@ -10,6 +10,7 @@ php:
   - nightly
 
 before_script:
+  - echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer install --ignore-platform-reqs --dev --prefer-dist --no-interaction
 
 script:
