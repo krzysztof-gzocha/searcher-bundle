@@ -10,7 +10,8 @@
   "minimum-stability": "dev",
   "suggest": {
     "doctrine/orm": "to use with Doctrine's ORM",
-    "doctrine/mongodb-odm": "to use with Doctrine's ODM"
+    "doctrine/mongodb-odm": "to use with Doctrine's ODM",
+    "knplabs/knp-paginator-bundle": "to use with Knp Paginator bundle"
   },
   "config": {
     "bin-dir": "bin",
@@ -32,6 +33,7 @@
     "phpmd/phpmd": "dev-master",
     "doctrine/orm": "^2.0",
     "doctrine/mongodb-odm": "^1.0",
+    "knplabs/knp-paginator-bundle": "^2.5",
     "fabpot/php-cs-fixer": "dev-master"
   },
   "repositories": [
