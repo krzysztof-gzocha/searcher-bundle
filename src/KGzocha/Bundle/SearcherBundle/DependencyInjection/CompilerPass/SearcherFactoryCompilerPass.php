@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class SearcherFactoryCompilerPass extends AbstractCompilerPass
 {
-    const SEARCHER_FACTORY_SERVICE = 'kgzocha.searcher_bundle.searcher_factory';
+    const FACTORY_PARAM = 'k_gzocha_searcher.factory_service';
 
     /**
      * @var string
@@ -81,7 +81,9 @@ class SearcherFactoryCompilerPass extends AbstractCompilerPass
             $container
                 ->getDefinition($factoryName)
                 ->setFactory([
-                    new Reference(self::SEARCHER_FACTORY_SERVICE),
+                    new Reference(
+                        $container->getParameter(self::FACTORY_PARAM)
+                    ),
                     'build'
                 ])
                 ->setArguments([new Reference($imposerCollection)]);

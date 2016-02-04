@@ -18,6 +18,12 @@ class KGzochaSearcherExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $container->setParameter(
+            'k_gzocha_searcher.factory_service',
+            $config['factory_service']
+        );
+
         $loader = new YamlFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
