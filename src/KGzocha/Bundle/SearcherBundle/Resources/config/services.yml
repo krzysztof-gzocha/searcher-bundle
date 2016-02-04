@@ -1,13 +1,7 @@
 services:
-  kgzocha.searcher_bundle.event_dispatcher:
-    class: KGzocha\Bundle\SearcherBundle\Event\EventDispatcher\EventDispatcherAdapter
-    arguments:
-      - @event_dispatcher
 
   kgzocha.searcher_bundle.parameter_generator:
     class: KGzocha\Searcher\ParameterGenerator\ParameterGenerator
 
   kgzocha.searcher_bundle.searcher_factory:
     class: KGzocha\Bundle\SearcherBundle\Searcher\Factory\SearcherFactory
-    arguments:
-      - @kgzocha.searcher_bundle.event_dispatcher

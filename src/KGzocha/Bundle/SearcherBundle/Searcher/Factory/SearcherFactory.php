@@ -2,10 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Searcher\Factory;
 
-use KGzocha\Searcher\Event\Dispatcher\EventDispatcherInterface;
-use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection;
 use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
-use KGzocha\Searcher\FilterImposer\FilterImposerInterface;
 use KGzocha\Searcher\Searcher\Searcher;
 
 /**
@@ -15,28 +12,11 @@ use KGzocha\Searcher\Searcher\Searcher;
 class SearcherFactory implements SearcherFactoryInterface
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    private $eventDispatcher;
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function __construct(
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
      * @inheritdoc
      */
     public function build(
         FilterImposerCollectionInterface $imposerCollection
     ) {
-        return new Searcher(
-            $imposerCollection,
-            $this->eventDispatcher
-        );
+        return new Searcher($imposerCollection);
     }
 }

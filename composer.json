@@ -33,7 +33,7 @@
     "phpmd/phpmd": "dev-master",
     "doctrine/orm": "dev-master",
     "doctrine/mongodb-odm": "dev-master",
-    "knplabs/knp-paginator-bundle": "dev-master",
+    "knplabs/knp-paginator-bundle": "^2.0",
     "fabpot/php-cs-fixer": "dev-master"
   },
   "repositories": [

@@ -2,7 +2,6 @@
 
 namespace KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass;
 
-use KGzocha\Searcher\Searcher\Searcher;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 

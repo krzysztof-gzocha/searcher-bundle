@@ -14,23 +14,11 @@ class SearcherFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testBuildMethod()
     {
-        /** @var EventDispatcherInterface $eventDispatcher */
-        $eventDispatcher = $this->getEventDispatcher();
-        $factory = new SearcherFactory($eventDispatcher);
+        $factory = new SearcherFactory();
 
         $this->assertInstanceOf(
             'KGzocha\Searcher\Searcher\SearcherInterface',
             $factory->build(new FilterImposerCollection())
         );
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getEventDispatcher()
-    {
-        return $this
-            ->getMockBuilder('KGzocha\Searcher\Event\Dispatcher\EventDispatcherInterface')
-            ->getMockForAbstractClass();
     }
 }
