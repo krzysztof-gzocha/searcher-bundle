@@ -24,7 +24,7 @@
   },
   "require":{
     "php": ">=5.4",
-    "symfony/symfony": "^2.3",
+    "symfony/framework-bundle": "^2.3",
     "krzysztof-gzocha/searcher": "^1.0.0"
   },
   "require-dev": {
@@ -35,11 +35,5 @@
     "doctrine/mongodb-odm": "dev-master",
     "knplabs/knp-paginator-bundle": "^2.0",
     "fabpot/php-cs-fixer": "dev-master"
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:krzysztof-gzocha/searcher.git"
-    }
-  ]
+  }
 }
