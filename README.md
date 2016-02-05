@@ -9,7 +9,6 @@ composer require krzysztof-gzocha/searcher-bundle
 ```
 and don't forget to register it in your AppKernel:
 ```
-
 public function registerBundles()
 {
   $bundles = array(
