@@ -38,7 +38,26 @@ my_search.imposer_collection:
   tags:
     - { name: searcher.filter_imposer_collection, contextId: %my_search.context_id% }
 ```
-- Tag your model's services
+- For this example we will use simple **AgeRangeModel** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own.
+```php
+class AgeRangeFilterModel implements FilterModelInterface
+{
+    private $minimalAge;
+    private $maximalAge;
+
+    /**
+    * Only required method.
+    * If will return true, then it will be passed to some of the FilterImposer(s)
+    */
+    public function isImposed()
+    {
+        return null !== $this->minimalAge && null !== $this->maximalAge;
+    }
+
+    // getters, setters, what ever
+}
+```
+- Now we will tag model service
 ```yml
 my_search.age_range_model:
     class: \AgeRangeModel     # Your model class
@@ -48,6 +67,39 @@ my_search.age_range_model:
           contextId: %my_search.context_id%, 
           modelName: ageRange   # We will use this name in Form
         }
+```
+- For this example we will also use **AgeRangeImposer** described in (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own
+```php
+class AgeRangeImposer implements FilterImposerInterface
+{
+    public function imposeFilter(
+        FilterModelInterface $filterModel,
+        SearchingContextInterface $searchingContext
+    ) {
+        $searchingContext
+            ->getQueryBuilder()
+            ->andWhere('e.age >= :minimalAge')
+            ->andWhere('e.age <= :maximalAge')
+            ->setParameter('minimalAge', $filterModel->getMinimalAge())
+            ->setParameter('maximalAge', $filterModel->getMaximalAge());
+    }
+
+    public function supportsModel(
+        FilterModelInterface $filterModel
+    ) {
+        // No need to check isImposed(). Searcher will check it
+        return $filterModel instanceof AgeRangeFilterModel;
+    }
+
+    /**
+    * You can skip this method if you will extend from QueryBuilderFilterImposer.
+    */
+    public function supportsSearchingContext(
+        SearchingContextInterface $searchingContext
+    ) {
+        return $searchingContext instanceof \Doctrine\ORM\QueryBuilder;
+    }
+}
 ```
 - Tag your imposer's services
 ```yml
