@@ -8,7 +8,7 @@ You can install this bundle via composer
 composer require krzysztof-gzocha/searcher-bundle
 ```
 and don't forget to register it in your AppKernel:
-```
+```php
 public function registerBundles()
 {
   $bundles = array(
@@ -21,25 +21,25 @@ public function registerBundles()
 
 ### Example usage
 - I recommend to create parameter, which will holds the name of your searching. For example `people` if you want to search for people.
-```
+```yml
 parameters:
     my_search.context_id: "people"
 ```
 - Create your collections for FilterModels and FilterImposers. Of course you do not need to create your own classes - they are ready in searcher core library. We just need to specify, that we want to use them in this context. In this example we are using `NamedFilterModelCollection`, which later on will allow us to create form and make use of `property_path`.
-```
+```yml
 my_search.model_colection:
     class: KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection
     tags:
       - { name: searcher.named_filter_model_collection, contextId: %my_search.context_id% }
 ```
-```
+```yml
 my_search.imposer_collection:
   class: KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection
   tags:
     - { name: searcher.filter_imposer_collection, contextId: %my_search.context_id% }
 ```
 - Tag your model's services
-```
+```yml
 my_search.age_range_model:
     class: \AgeRangeModel     # Your model class
     tags:
@@ -50,7 +50,7 @@ my_search.age_range_model:
         }
 ```
 - Tag your imposer's services
-```
+```yml
 my_search.age_range_imposer:
     class: \AgeRangeImposer   # Your imposer class
     tags:
@@ -60,14 +60,14 @@ my_search.age_range_imposer:
         }
 ```
 - Create SearchingContext for your search. In the example we assume that you want to use `Doctrine\ORM\QueryBuilder`, so we can use existing class as a context: `KGzocha\Searcher\Context\QueryBuilderSearchingContext`, but if you want anything else please feel free to search for it in searcher library or create your own.
-```
+```yml
 my_search.searching_context:
   class: KGzocha\Searcher\Context\QueryBuilderSearchingContext
   arguments:
     - @my_search.query_builder  # Or any QueryBuilder service
 ```
 - Searcher
-```
+```yml
 my_search.searcher:
   class: KGzocha\Searcher\Searcher\Searcher
   tags:
@@ -78,7 +78,7 @@ my_search.searcher:
 ```
 - Now we can create example form. Form will allow Symfony to take care of population and validation our models from request.
 This step is optional and you don't have to populate models from request. You can do this however you want to.
-```
+```php
 use KGzocha\Bundle\SearcherBundle\Form\SearchForm;
 
 class MySearchForm extends SearchForm
@@ -103,7 +103,7 @@ class MySearchForm extends SearchForm
 }
 ```
 - Now we can search for our results in controller
-```
+```php
 public function searchAction(Request $request)
 {
     $form = $this->createForm(
