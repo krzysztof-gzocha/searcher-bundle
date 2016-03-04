@@ -3,7 +3,7 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\Context;
 
 use KGzocha\Bundle\SearcherBundle\Context\KnpPaginatorAdapter;
-use KGzocha\Searcher\Context\QueryBuilderSearchingContext;
+use KGzocha\Searcher\Context\Doctrine\QueryBuilderSearchingContext;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
