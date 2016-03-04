@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Context;
 
-use KGzocha\Searcher\Context\QueryBuilderSearchingContext;
+use KGzocha\Searcher\Context\Doctrine\QueryBuilderSearchingContext;
 use KGzocha\Searcher\Context\SearchingContextInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
