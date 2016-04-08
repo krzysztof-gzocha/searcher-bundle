@@ -14,5 +14,4 @@ before_script:
   - composer install --ignore-platform-reqs --dev --prefer-dist --no-interaction
 
 script:
-  - bin/phing run-tests
-  - bin/phing phpmd
+  - bin/phing ci

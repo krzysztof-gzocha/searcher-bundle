@@ -19,26 +19,48 @@ public function registerBundles()
 }
 ```
 
-### Example usage
-- I recommend to create parameter, which will holds the name of your searching. For example `people` if you want to search for people.
-```yml
-parameters:
-    my_search.context_id: "people"
+## Example usage
+### Config
+In config file we will specify minimal configuration for `people` context.
+You can full full example of config reference in **[here](https://github.com/krzysztof-gzocha/searcher-bundle/blob/master/src/KGzocha/Bundle/SearcherBundle/configReference.yml)**
 ```
-- Create your collections for FilterModels and FilterImposers. Of course you do not need to create your own classes - they are ready in searcher core library. We just need to specify, that we want to use them in this context. In this example we are using `NamedFilterModelCollection`, which later on will allow us to create form and make use of `property_path`.
-```yml
-my_search.model_colection:
-    class: KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection
-    tags:
-      - { name: searcher.named_filter_model_collection, contextId: %my_search.context_id% }
+k_gzocha_searcher:
+  contexts:
+    people:
+      context:
+        service: your_searching_context_service_id
+
+      models:
+        - { class: \AgeRangeModel, name: age_range}
+        - { service: some_service_id, name: other_model }
+
+      imposers:
+        - { class: \AgeRangeImposer, name: age_range }
+        - { service: other_service_id, name: my_imposer }
 ```
-```yml
-my_search.imposer_collection:
-  class: KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection
-  tags:
-    - { name: searcher.filter_imposer_collection, contextId: %my_search.context_id% }
+As you can see you can specify everything as a simple class or as your own service.
+This configuration will create our `people` context and create all required services (imposer collection, model collection, searcher and context), so you can access them and make use of them. For example to access Searcher instance from controller you can simply:
+```php
+$this->get('k_gzocha_searcher.people.searcher');
 ```
-- For this example we will use simple **AgeRangeModel** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own.
+or to access `age_range` model:
+```php
+$this->get('k_gzocha_searcher.people.model.age_range');
+```
+or access `my_imposer`:
+```php
+$this->get('k_gzocha_searcher.people.imposer.my_imposer');
+```
+I guess it's pretty easy to understand this naming convention.
+In this example you need to define only 1 service on your own - SearchingContext service with id specified in the config (`your_searching_context_service_id`). You can do it like this:
+```yaml
+your_searching_context_service_id:
+  class: KGzocha\Searcher\Context\QueryBuilderSearchingContext
+  arguments:
+    - @my_search.query_builder  # Or any QueryBuilder service
+```
+### Code
+For this example we will use simple **AgeRangeModel** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own class or service.
 ```php
 class AgeRangeFilterModel implements FilterModelInterface
 {
@@ -57,18 +79,7 @@ class AgeRangeFilterModel implements FilterModelInterface
     // getters, setters, what ever
 }
 ```
-- Now we will tag model service
-```yml
-my_search.age_range_model:
-    class: \AgeRangeModel     # Your model class
-    tags:
-      - { 
-          name: searcher.named_model, 
-          contextId: %my_search.context_id%, 
-          modelName: ageRange   # We will use this name in Form
-        }
-```
-- For this example we will also use **AgeRangeImposer** described in (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own
+We will also use **AgeRangeImposer** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own class or service.
 ```php
 class AgeRangeImposer implements FilterImposerInterface
 {
@@ -101,34 +112,8 @@ class AgeRangeImposer implements FilterImposerInterface
     }
 }
 ```
-- Tag your imposer's services
-```yml
-my_search.age_range_imposer:
-    class: \AgeRangeImposer   # Your imposer class
-    tags:
-      - { 
-          name: searcher.filter_imposer, 
-          contextId: %my_search.context_id%
-        }
-```
-- Create SearchingContext for your search. In the example we assume that you want to use `Doctrine\ORM\QueryBuilder`, so we can use existing class as a context: `KGzocha\Searcher\Context\QueryBuilderSearchingContext`, but if you want anything else please feel free to search for it in searcher library or create your own.
-```yml
-my_search.searching_context:
-  class: KGzocha\Searcher\Context\QueryBuilderSearchingContext
-  arguments:
-    - @my_search.query_builder  # Or any QueryBuilder service
-```
-- Searcher
-```yml
-my_search.searcher:
-  class: KGzocha\Searcher\Searcher\Searcher
-  tags:
-    - { 
-        name: searcher.factory,
-        contextId: %my_search.context_id% 
-      }
-```
-- Now we can create example form. Form will allow Symfony to take care of population and validation our models from request.
+### Form (optional)
+Now we can create example form. Form will allow Symfony to take care of population and validation our models from request.
 This step is optional and you don't have to populate models from request. You can do this however you want to.
 ```php
 use KGzocha\Bundle\SearcherBundle\Form\SearchForm;
@@ -147,7 +132,7 @@ class MySearchForm extends SearchForm
             /** and any other fields.. **/
             ->add('<PARAM NAME IN REQUEST>', '<ANY FORM TYPE>', [
                 'property_path' => $this->getPath(
-                    '<MODEL NAME FROM CONFIG>', 
+                    '<MODEL NAME FROM CONFIG>',
                     '<MODELS ATTRIBUTE NAME>'
                 ),
             ]);
@@ -165,12 +150,10 @@ public function searchAction(Request $request)
 
     $form->handleRequest($request);
     // Now we can check if form is valid
-    
-    $searcher = $this->get('my_search.searcher');
-    $results = $searcher->search(
-        $form->getData(),
-        $this->get('my_search.searching_context')
-    );
+
+    $searcher = $this->get('k_gzocha_searcher.people.searcher');
+    $results = $searcher->search($form->getData());
+    // Yay, we have our results!
 }
 ```
 

@@ -3,6 +3,7 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\Searcher\Factory;
 
 use KGzocha\Bundle\SearcherBundle\Searcher\Factory\SearcherFactory;
+use KGzocha\Bundle\SearcherBundle\Test\SearchingContextStub;
 use KGzocha\Searcher\Event\Dispatcher\EventDispatcherInterface;
 use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection;
 
@@ -18,7 +19,7 @@ class SearcherFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             'KGzocha\Searcher\Searcher\SearcherInterface',
-            $factory->build(new FilterImposerCollection())
+            $factory->build(new FilterImposerCollection(), new SearchingContextStub(true))
         );
     }
 }

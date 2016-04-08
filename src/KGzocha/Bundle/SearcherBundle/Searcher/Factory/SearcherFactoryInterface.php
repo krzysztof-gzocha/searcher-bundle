@@ -2,6 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Searcher\Factory;
 
+use KGzocha\Searcher\Context\SearchingContextInterface;
 use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
 use KGzocha\Searcher\Searcher\Searcher;
 
@@ -13,10 +14,12 @@ interface SearcherFactoryInterface
 {
     /**
      * @param FilterImposerCollectionInterface $imposerCollection
+     * @param SearchingContextInterface $searchingContext
      *
      * @return Searcher
      */
     public function build(
-        FilterImposerCollectionInterface $imposerCollection
+        FilterImposerCollectionInterface $imposerCollection,
+        SearchingContextInterface $searchingContext
     );
 }
