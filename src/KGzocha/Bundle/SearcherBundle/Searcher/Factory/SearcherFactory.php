@@ -2,6 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Searcher\Factory;
 
+use KGzocha\Searcher\Context\SearchingContextInterface;
 use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
 use KGzocha\Searcher\Searcher\Searcher;
 
@@ -15,8 +16,9 @@ class SearcherFactory implements SearcherFactoryInterface
      * @inheritdoc
      */
     public function build(
-        FilterImposerCollectionInterface $imposerCollection
+        FilterImposerCollectionInterface $imposerCollection,
+        SearchingContextInterface $searchingContext
     ) {
-        return new Searcher($imposerCollection);
+        return new Searcher($imposerCollection, $searchingContext);
     }
 }

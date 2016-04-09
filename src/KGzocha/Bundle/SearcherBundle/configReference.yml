@@ -1,0 +1,36 @@
+# In all configuration nodes class will be taken into consideration
+# only if there won't be any service specified.
+# Service is more important than class.
+# If both of them will be specified only service will be used.
+
+k_gzocha_searcher:
+  contexts:
+    people:
+      # optional
+      model_collection:
+        class: KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection
+        service: model_collection_service
+
+      # optional
+      imposer_collection:
+        class: KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection
+        service: imposer_service
+
+      # optional
+      searcher:
+        class: KGzocha\Searcher\Searcher\Searcher
+        service: searcher_service
+
+      context:
+        class: SearchingContextClass
+        service: context_service
+
+      models:
+        - { class: \AgeRangeModel, name: ageRange1, service: abc1 }
+        - { class: \AgeRangeModel, name: ageRange2, service: abc2 }
+        - { class: \AgeRangeModel, name: ageRange3, service: abc3 }
+
+      imposers:
+        - { class: \AgeRangeImposer, name: ageRange1, service: def1 }
+        - { class: \AgeRangeImposer, name: ageRange1, service: def2 }
+        - { class: \AgeRangeImposer, name: ageRange1, service: def3 }
