@@ -21,9 +21,9 @@ public function registerBundles()
 
 ## Example usage
 ### Config
-In config file we will specify minimal configuration for `people` context.
+In config file we will specify minimal configuration for `people` context.  
 You can full full example of config reference in **[here](https://github.com/krzysztof-gzocha/searcher-bundle/blob/master/src/KGzocha/Bundle/SearcherBundle/configReference.yml)**
-```
+```yaml
 k_gzocha_searcher:
   contexts:
     people:
