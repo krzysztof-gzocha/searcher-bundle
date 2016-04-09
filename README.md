@@ -139,7 +139,7 @@ class MySearchForm extends SearchForm
     }
 }
 ```
-- Now we can search for our results in controller
+Now we can search for our results in controller
 ```php
 public function searchAction(Request $request)
 {
@@ -161,4 +161,4 @@ public function searchAction(Request $request)
 All ideas and pull request are welcomed and appreciated.
 Please, feel free to share your thought via issues.
 
-Command to run tests: `bin/phing run-tests`.
+Command to run tests: `bin/phing`.
