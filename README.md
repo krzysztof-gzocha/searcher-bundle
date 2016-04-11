@@ -139,13 +139,13 @@ class MySearchForm extends SearchForm
     }
 }
 ```
-Now we can search for our results in controller
+### Controller
 ```php
 public function searchAction(Request $request)
 {
     $form = $this->createForm(
         new MySearchForm(),
-        $this->get('my_search.imposer_collection')
+        $this->get('k_gzocha_searcher.people.model_collection')
     );
 
     $form->handleRequest($request);
