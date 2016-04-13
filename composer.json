@@ -1,6 +1,7 @@
 {
   "name": "krzysztof-gzocha/searcher-bundle",
   "description": "Bridge between searcher and Symfony2 framework",
+  "license": "MIT",
   "type": "library",
   "authors": [
     {
