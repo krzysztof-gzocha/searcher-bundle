@@ -26,7 +26,7 @@
   "require":{
     "php": ">=5.4",
     "symfony/framework-bundle": "^2.3",
-    "krzysztof-gzocha/searcher": "^2.0"
+    "krzysztof-gzocha/searcher": "^2.1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "4.8.10",

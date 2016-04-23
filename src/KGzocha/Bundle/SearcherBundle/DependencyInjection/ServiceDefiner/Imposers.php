@@ -56,6 +56,38 @@ class Imposers implements ServiceDefinerInterface
             $model['name']
         );
 
+        static::checkParameters($contextId, $model);
+
+        // Build from service
+        if (isset($model['service'])) {
+            self::checkServiceExsists($container, $contextId, $model);
+            $definition = $container->setDefinition(
+                $definitionName,
+                $container->getDefinition($model['service'])
+            );
+            self::addToCollection($container, $contextId, $definitionName);
+
+            return $definition;
+        }
+
+        // Build from class
+        $definition = $container->setDefinition(
+            $definitionName,
+            new Definition($model['class'])
+        );
+        self::addToCollection($container, $contextId, $definitionName);
+
+        return $definition;
+    }
+
+    /**
+     * @param string $contextId
+     * @param array $model
+     */
+    private static function checkParameters(
+        $contextId,
+        array &$model
+    ) {
         if (!isset($model['class'])
             && !isset($model['service'])) {
             throw new InvalidDefinitionException(sprintf(
@@ -64,19 +96,19 @@ class Imposers implements ServiceDefinerInterface
                 $contextId
             ));
         }
+    }
 
-        if (isset($model['class'])) {
-            $definition = $container->setDefinition(
-                $definitionName,
-                new Definition($model['class'])
-            );
-            static::addToCollection($container, $contextId, $definitionName);
-
-            return $definition;
-        }
-
-        if (isset($model['service'])
-            && !$container->hasDefinition($model['service'])) {
+    /**
+     * @param ContainerBuilder $container
+     * @param string $contextId
+     * @param array $model
+     */
+    private static function checkServiceExsists(
+        ContainerBuilder $container,
+        $contextId,
+        array &$model
+    ) {
+        if (!$container->hasDefinition($model['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'Service "%s" configured for imposer in'.
                 'searching context "%s" does not exist',
@@ -84,14 +116,6 @@ class Imposers implements ServiceDefinerInterface
                 $contextId
             ));
         }
-
-        $definition = $container->setDefinition(
-            $definitionName,
-            $container->getDefinition($model['service'])
-        );
-        static::addToCollection($container, $contextId, $definitionName);
-
-        return $definition;
     }
 
     /**

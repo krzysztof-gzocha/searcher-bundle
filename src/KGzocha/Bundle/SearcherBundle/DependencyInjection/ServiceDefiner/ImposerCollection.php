@@ -25,6 +25,37 @@ class ImposerCollection implements ServiceDefinerInterface
         ContainerBuilder $container
     ) {
         $collectionConfig = $contextConfig['imposer_collection'];
+        self::checkCollectionParameters($contextId, $collectionConfig);
+
+        // Build from service
+        if (isset($collectionConfig['service'])) {
+            self::checkServiceExists(
+                $container,
+                $contextId,
+                $collectionConfig
+            );
+
+            return $container->setDefinition(
+                sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId),
+                $container->getDefinition($collectionConfig['service'])
+            );
+        }
+
+        // Build from class
+        return $container->setDefinition(
+            sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId),
+            new Definition($collectionConfig['class'])
+        );
+    }
+
+    /**
+     * @param string $contextId
+     * @param array $collectionConfig
+     */
+    private static function checkCollectionParameters(
+        $contextId,
+        array &$collectionConfig
+    ) {
         if (!isset($collectionConfig['class'])
             && !isset($collectionConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
@@ -33,9 +64,19 @@ class ImposerCollection implements ServiceDefinerInterface
                 $contextId
             ));
         }
+    }
 
-        if (isset($collectionConfig['service'])
-            && !$container->hasDefinition($collectionConfig['service'])) {
+    /**
+     * @param ContainerBuilder $container
+     * @param string $contextId
+     * @param array $collectionConfig
+     */
+    private static function checkServiceExists(
+        ContainerBuilder $container,
+        $contextId,
+        array &$collectionConfig
+    ) {
+        if (!$container->hasDefinition($collectionConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'Service "%s" configured for imposer_collection in'.
                 'searching context "%s" does not exist',
@@ -43,17 +84,5 @@ class ImposerCollection implements ServiceDefinerInterface
                 $contextId
             ));
         }
-
-        if (isset($collectionConfig['service'])) {
-            return $container->setDefinition(
-                sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId),
-                $container->getDefinition($collectionConfig['service'])
-            );
-        }
-
-        return $container->setDefinition(
-            sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId),
-            new Definition($collectionConfig['class'])
-        );
     }
 }
