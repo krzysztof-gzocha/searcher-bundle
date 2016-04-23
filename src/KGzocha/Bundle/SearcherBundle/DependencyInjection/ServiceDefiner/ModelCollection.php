@@ -25,26 +25,15 @@ class ModelCollection implements ServiceDefinerInterface
         ContainerBuilder $container
     ) {
         $collectionConfig = $contextConfig['model_collection'];
-        if (!isset($collectionConfig['class'])
-            && !isset($collectionConfig['service'])) {
-            throw new InvalidDefinitionException(sprintf(
-                'You have to specify "class" or "service" for '.
-                'model_collection in searching context "%s"',
-                $contextId
-            ));
-        }
-
-        if (isset($collectionConfig['service'])
-            && !$container->hasDefinition($collectionConfig['service'])) {
-            throw new InvalidDefinitionException(sprintf(
-                'Service "%s" configured for model_collection in'.
-                'searching context "%s" does not exist',
-                $collectionConfig['service'],
-                $contextId
-            ));
-        }
+        static::checkCollectionParameters($contextId, $collectionConfig);
 
         if (isset($collectionConfig['service'])) {
+            self::checkServiceExists(
+                $container,
+                $contextId,
+                $collectionConfig
+            );
+
             return $container->setDefinition(
                 sprintf('k_gzocha_searcher.%s.model_collection', $contextId),
                 $container->getDefinition($collectionConfig['service'])
@@ -55,5 +44,43 @@ class ModelCollection implements ServiceDefinerInterface
             sprintf('k_gzocha_searcher.%s.model_collection', $contextId),
             new Definition($collectionConfig['class'])
         );
+    }
+
+    /**
+     * @param string $contextId
+     * @param array $collectionConfig
+     */
+    private static function checkCollectionParameters(
+        $contextId,
+        array &$collectionConfig
+    ) {
+        if (!isset($collectionConfig['class'])
+            && !isset($collectionConfig['service'])) {
+            throw new InvalidDefinitionException(sprintf(
+                'You have to specify "class" or "service" for '.
+                'model_collection in searching context "%s"',
+                $contextId
+            ));
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param string $contextId
+     * @param array $collectionConfig
+     */
+    private static function checkServiceExists(
+        ContainerBuilder $container,
+        $contextId,
+        array &$collectionConfig
+    ) {
+        if (!$container->hasDefinition($collectionConfig['service'])) {
+            throw new InvalidDefinitionException(sprintf(
+                'Service "%s" configured for model_collection in'.
+                'searching context "%s" does not exist',
+                $collectionConfig['service'],
+                $contextId
+            ));
+        }
     }
 }

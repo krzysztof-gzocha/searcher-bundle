@@ -26,7 +26,7 @@ class Models implements ServiceDefinerInterface
         ContainerBuilder $container
     ) {
         foreach ($contextConfig['models'] as &$model) {
-            static::defineModel($contextId, $model, $container);
+            self::defineModel($contextId, $model, $container);
         }
     }
 
@@ -56,6 +56,34 @@ class Models implements ServiceDefinerInterface
             $model['name']
         );
 
+        self::checkParameters($contextId, $model);
+
+        if (isset($model['service'])) {
+            self::checkServiceExists($container, $contextId, $model);
+            $definition = $container->setDefinition(
+                $definitionName,
+                $container->getDefinition($model['service'])
+            );
+            self::addToCollection($container, $contextId, $definitionName);
+
+            return $definition;
+        }
+
+        $definition = $container->setDefinition(
+            $definitionName,
+            new Definition($model['class'])
+        );
+        self::addToCollection($container, $contextId, $definitionName);
+
+        return $definition;
+    }
+
+    /**
+     * @param string $contextId
+     * @param array $model
+     */
+    private static function checkParameters($contextId, array &$model)
+    {
         if (!isset($model['class'])
             && !isset($model['service'])) {
             throw new InvalidDefinitionException(sprintf(
@@ -64,19 +92,19 @@ class Models implements ServiceDefinerInterface
                 $contextId
             ));
         }
+    }
 
-        if (isset($model['class'])) {
-            $definition = $container->setDefinition(
-                $definitionName,
-                new Definition($model['class'])
-            );
-            static::addToCollection($container, $contextId, $definitionName);
-
-            return $definition;
-        }
-
-        if (isset($model['service'])
-            && !$container->hasDefinition($model['service'])) {
+    /**
+     * @param ContainerBuilder $container
+     * @param string$contextId
+     * @param array $model
+     */
+    private static function checkServiceExists(
+        ContainerBuilder $container,
+        $contextId,
+        array &$model
+    ) {
+        if (!$container->hasDefinition($model['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'Service "%s" configured for model in'.
                 'searching context "%s" does not exist',
@@ -84,14 +112,6 @@ class Models implements ServiceDefinerInterface
                 $contextId
             ));
         }
-
-        $definition = $container->setDefinition(
-            $definitionName,
-            $container->getDefinition($model['service'])
-        );
-        static::addToCollection($container, $contextId, $definitionName);
-
-        return $definition;
     }
 
     /**

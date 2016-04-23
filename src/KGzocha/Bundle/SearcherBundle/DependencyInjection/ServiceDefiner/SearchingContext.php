@@ -24,36 +24,57 @@ class SearchingContext implements ServiceDefinerInterface
         array &$contextConfig,
         ContainerBuilder $container
     ) {
-        $collectionConfig = $contextConfig['context'];
-        if (!isset($collectionConfig['class'])
-            && !isset($collectionConfig['service'])) {
+        $config = $contextConfig['context'];
+        self::checkParameters($contextId, $config);
+
+        if (isset($config['service'])) {
+            self::checkServiceExists($container, $contextId, $config);
+
+            return $container->setDefinition(
+                sprintf('k_gzocha_searcher.%s.context', $contextId),
+                $container->getDefinition($config['service'])
+            );
+        }
+
+        return $container->setDefinition(
+            sprintf('k_gzocha_searcher.%s.context', $contextId),
+            new Definition($config['class'])
+        );
+    }
+
+    /**
+     * @param $contextId
+     * @param array $config
+     */
+    private static function checkParameters($contextId, array &$config)
+    {
+        if (!isset($config['class'])
+            && !isset($config['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'You have to specify "class" or "service" for '.
                 'context in searching context "%s"',
                 $contextId
             ));
         }
+    }
 
-        if (isset($collectionConfig['class'])) {
-            return $container->setDefinition(
-                sprintf('k_gzocha_searcher.%s.context', $contextId),
-                new Definition($collectionConfig['class'])
-            );
-        }
-
-        if (isset($collectionConfig['service'])
-            && !$container->hasDefinition($collectionConfig['service'])) {
+    /**
+     * @param ContainerBuilder $container
+     * @param string $contextId
+     * @param array $config
+     */
+    private static function checkServiceExists(
+        ContainerBuilder $container,
+        $contextId,
+        array &$config
+    ) {
+        if (!$container->hasDefinition($config['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'Service "%s" configured for context in'.
                 'searching context "%s" does not exist',
-                $collectionConfig['service'],
+                $config['service'],
                 $contextId
             ));
         }
-
-        return $container->setDefinition(
-            sprintf('k_gzocha_searcher.%s.context', $contextId),
-            $container->getDefinition($collectionConfig['service'])
-        );
     }
 }

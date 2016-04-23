@@ -25,47 +25,68 @@ class Searcher implements ServiceDefinerInterface
         array &$contextConfig,
         ContainerBuilder $container
     ) {
-        $collectionConfig = $contextConfig['searcher'];
-        if (!isset($collectionConfig['class'])
-            && !isset($collectionConfig['service'])) {
+        $searcherConfig = $contextConfig['searcher'];
+        self::checkParameters($contextId, $searcherConfig);
+
+        if (isset($searcherConfig['service'])) {
+            self::checkServiceExists($container, $contextId, $searcherConfig);
+
+            return $container->setDefinition(
+                sprintf('k_gzocha_searcher.%s.searcher', $contextId),
+                $container->getDefinition($searcherConfig['service'])
+            );
+        }
+
+        $definition = new Definition($searcherConfig['class']);
+        if ($searcherConfig['class'] === Configuration::SEARCHER_CLASS) {
+            $definition
+                ->addArgument($container->getDefinition(
+                    sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId)
+                ))
+                ->addArgument($container->getDefinition(
+                    sprintf('k_gzocha_searcher.%s.context', $contextId)
+                ));
+        }
+
+        return $container->setDefinition(
+            sprintf('k_gzocha_searcher.%s.searcher', $contextId),
+            $definition
+        );
+    }
+
+    /**
+     * @param string $contextId
+     * @param array $searcherConfig
+     */
+    private static function checkParameters($contextId, array &$searcherConfig)
+    {
+        if (!isset($searcherConfig['class'])
+            && !isset($searcherConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'You have to specify "class" or "service" for '.
                 'searcher in searching context "%s"',
                 $contextId
             ));
         }
+    }
 
-        if (isset($collectionConfig['class'])) {
-            $definition = new Definition($collectionConfig['class']);
-            if ($collectionConfig['class'] === Configuration::SEARCHER_CLASS) {
-                $definition
-                    ->addArgument($container->getDefinition(
-                        sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId)
-                    ))
-                    ->addArgument($container->getDefinition(
-                        sprintf('k_gzocha_searcher.%s.context', $contextId)
-                    ));
-            }
-
-            return $container->setDefinition(
-                sprintf('k_gzocha_searcher.%s.searcher', $contextId),
-                $definition
-            );
-        }
-
-        if (isset($collectionConfig['service'])
-            && !$container->hasDefinition($collectionConfig['service'])) {
+    /**
+     * @param ContainerBuilder $container
+     * @param string $contextId
+     * @param array $searcherConfig
+     */
+    private static function checkServiceExists(
+        ContainerBuilder $container,
+        $contextId,
+        array &$searcherConfig
+    ) {
+        if (!$container->hasDefinition($searcherConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'Service "%s" configured for searcher in'.
                 'searching context "%s" does not exist',
-                $collectionConfig['service'],
+                $searcherConfig['service'],
                 $contextId
             ));
         }
-
-        return $container->setDefinition(
-            sprintf('k_gzocha_searcher.%s.searcher', $contextId),
-            $container->getDefinition($collectionConfig['service'])
-        );
     }
 }
