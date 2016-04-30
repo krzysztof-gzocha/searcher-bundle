@@ -8,7 +8,7 @@ k_gzocha_searcher:
     people:
       # optional
       model_collection:
-        class: KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection
+        class: KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection
         service: model_collection_service
 
       # optional

@@ -119,7 +119,7 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
         $container->setDefinition(
             'k_gzocha_searcher.test.model_collection',
-            new Definition('\KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection')
+            new Definition('\KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection')
         );
 
         return $container;

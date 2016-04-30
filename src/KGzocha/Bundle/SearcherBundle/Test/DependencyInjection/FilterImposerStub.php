@@ -4,7 +4,7 @@ namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
 use KGzocha\Searcher\Context\SearchingContextInterface;
 use KGzocha\Searcher\FilterImposer\FilterImposerInterface;
-use KGzocha\Searcher\Model\FilterModel\FilterModelInterface;
+use KGzocha\Searcher\FilterModel\FilterModelInterface;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
