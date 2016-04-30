@@ -4,7 +4,7 @@ namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
 use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
-use KGzocha\Searcher\Model\FilterModel\Collection\FilterModelCollectionInterface;
+use KGzocha\Searcher\FilterModel\Collection\FilterModelCollectionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 

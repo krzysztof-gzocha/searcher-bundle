@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     const SEARCHER_CLASS = 'KGzocha\Searcher\Searcher\Searcher';
-    const MODEL_COLLECTION_CLASS = 'KGzocha\Searcher\Model\FilterModel\Collection\NamedFilterModelCollection';
+    const MODEL_COLLECTION_CLASS = 'KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection';
     const IMPOSER_COLLECTION_CLASS = 'KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection';
 
     /**
