@@ -1,4 +1,4 @@
-# SearcherBundle [![Build Status](https://travis-ci.org/krzysztof-gzocha/searcher-bundle.svg?branch=master)](https://travis-ci.org/krzysztof-gzocha/searcher-bundle)
+# SearcherBundle [![Build Status](https://travis-ci.org/krzysztof-gzocha/searcher-bundle.svg?branch=master)](https://travis-ci.org/krzysztof-gzocha/searcher-bundle) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/?branch=master)
 
 This bundle is providing integration between Symfony and [Searcher](https://github.com/krzysztof-gzocha/searcher)
 
@@ -152,16 +152,18 @@ public function searchAction(Request $request)
     // Now we can check if form is valid
 
     $searcher = $this->get('k_gzocha_searcher.people.searcher');
-    $results = $searcher->search($form->getData())->getResults();   // Read for 'wrapper_class'
+    $results = $searcher->search($form->getData());
     // Yay, we have our results!
+    // $results is instance of ResultCollection by default. Read for 'wrapper_class'
 }
 ```
 
 ### Wrapper class
 By default SearcherBundle will wrap Searcher into `WrappedResultsSearcher`,
-which has method `getResults()` that will return collection of your results.
-If you want to change this behaviour then you need to specify `wrapper_class` in searcher config.
-If you do not want any wrapper then just specify this field as null.
+which will return `ResultCollection` which has method `getResults()` that will return collection of your results.
+Of course `ResultCollection` itself is traversable, so you can use it inside `foreach` loop.
+This feature is useful in rare situations where you are not sure if your `QueryBuilder` will return array or traversable object. Returning `null` and trying to iterate over it will lead to an error. ResultCollection will prevent this kind of situation. If you want to change wrapper class then you need to specify `wrapper_class` in searcher config.
+Of course sometimes you want your Searcher to just return an integer or whatever, then you do not want to wrap your Searcher. In order to do that just specify `wrapper_class` as `null`
 
 ### Contributing
 All ideas and pull request are welcomed and appreciated.
