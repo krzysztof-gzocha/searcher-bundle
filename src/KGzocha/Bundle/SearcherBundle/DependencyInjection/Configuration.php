@@ -12,7 +12,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    const SEARCHER_CLASS = 'KGzocha\Searcher\Searcher\Searcher';
+    const SEARCHER_CLASS = 'KGzocha\Searcher\Searcher';
+    const WRAPPER_CLASS = 'KGzocha\Searcher\WrappedResultsSearcher';
     const MODEL_COLLECTION_CLASS = 'KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection';
     const IMPOSER_COLLECTION_CLASS = 'KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection';
 
@@ -93,6 +94,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('class')->defaultValue(self::SEARCHER_CLASS)->end()
                 ->scalarNode('service')->defaultValue(null)->end()
+                ->scalarNode('wrapper_class')->defaultValue(self::WRAPPER_CLASS)->end()
             ->end();
 
         return $node;

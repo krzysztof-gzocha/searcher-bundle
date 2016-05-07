@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Definition;
  */
 class SearcherTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCollectionDefinedWithClass()
+    public function testCDefinedWithClass()
     {
         $container = new ContainerBuilder();
         $contextConfig = [
@@ -40,7 +40,33 @@ class SearcherTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testCollectionDefinedWithService()
+    public function testWrappedSearcher()
+    {
+        $container = new ContainerBuilder();
+        $contextConfig = [
+            'searcher' => [
+                'class' => '\\stdClass',
+                'wrapper_class' => '',
+            ],
+        ];
+
+        Searcher::defineServices(
+            'test',
+            $contextConfig,
+            $container
+        );
+
+        $container->compile();
+        $this->assertTrue($container->hasDefinition(
+            'k_gzocha_searcher.test.searcher'
+        ));
+        $this->assertInstanceOf(
+            '\\stdClass',
+            $container->get('k_gzocha_searcher.test.searcher')
+        );
+    }
+
+    public function testDefinedWithService()
     {
         $container = new ContainerBuilder();
         $contextConfig = [
@@ -74,6 +100,7 @@ class SearcherTest extends \PHPUnit_Framework_TestCase
         $contextConfig = [
             'searcher' => [
                 'class' => Configuration::SEARCHER_CLASS,
+                'wrapper_class' => '\KGzocha\Searcher\WrappedResultsSearcher',
             ],
         ];
         $container->setDefinition(
@@ -95,7 +122,7 @@ class SearcherTest extends \PHPUnit_Framework_TestCase
             'k_gzocha_searcher.test.searcher'
         ));
         $this->assertInstanceOf(
-            Configuration::SEARCHER_CLASS,
+            'KGzocha\Searcher\WrappedResultsSearcher',
             $container->get('k_gzocha_searcher.test.searcher')
         );
     }

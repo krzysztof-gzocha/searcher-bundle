@@ -18,7 +18,7 @@ class SearcherFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new SearcherFactory();
 
         $this->assertInstanceOf(
-            'KGzocha\Searcher\Searcher\SearcherInterface',
+            'KGzocha\Searcher\SearcherInterface',
             $factory->build(new FilterImposerCollection(), new SearchingContextStub(true))
         );
     }

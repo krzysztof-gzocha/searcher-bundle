@@ -39,6 +39,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                         'searcher' => [
                             'class' => null,
                             'service' => 'searcher_service',
+                            'wrapper_class' => null,
                         ],
                         'context' => [
                             'service' => 'context_service',

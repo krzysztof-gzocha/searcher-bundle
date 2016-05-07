@@ -25,7 +25,7 @@ class ModelCollection implements ServiceDefinerInterface
         ContainerBuilder $container
     ) {
         $collectionConfig = $contextConfig['model_collection'];
-        static::checkCollectionParameters($contextId, $collectionConfig);
+        self::checkCollectionParameters($contextId, $collectionConfig);
 
         if (isset($collectionConfig['service'])) {
             self::checkServiceExists(

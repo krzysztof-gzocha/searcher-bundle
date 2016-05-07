@@ -26,7 +26,7 @@ class Imposers implements ServiceDefinerInterface
         ContainerBuilder $container
     ) {
         foreach ($contextConfig['imposers'] as &$model) {
-            static::defineModel($contextId, $model, $container);
+            self::defineModel($contextId, $model, $container);
         }
     }
 
@@ -56,7 +56,7 @@ class Imposers implements ServiceDefinerInterface
             $model['name']
         );
 
-        static::checkParameters($contextId, $model);
+        self::checkParameters($contextId, $model);
 
         // Build from service
         if (isset($model['service'])) {
