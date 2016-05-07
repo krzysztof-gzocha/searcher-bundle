@@ -9,9 +9,31 @@ php:
   - hhvm
   - nightly
 
+matrix:
+  include:
+    - php: 5.4
+      env: deps=low
+    - php: 7.0
+      env: deps=low
+  fast_finish: true
+  allow_failures:
+    - php: nightly
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_script:
   - if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then echo 'memory_limit = -1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini; fi;
-  - composer install --ignore-platform-reqs --dev --prefer-dist --no-interaction
+  - if [ -z "$deps" ]; then composer install --ignore-platform-reqs --dev --prefer-source --no-interaction; fi;
+  - if [ "$deps" == "low" ]; then composer update --ignore-platform-reqs --prefer-lowest --prefer-stable --no-interaction; fi;
 
 script:
-  - bin/phing ci
+  - composer coverage
+  - if [ "${TRAVIS_PHP_VERSION}" == "7.0" ]; then composer phpmd; fi;
+
+
+after_script:
+  - echo $TRAVIS_PHP_VERSION
+  - if [ "${TRAVIS_PHP_VERSION}" == "7.0" ]; then wget https://scrutinizer-ci.com/ocular.phar; fi;
+  - if [ "${TRAVIS_PHP_VERSION}" == "7.0" ]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi;

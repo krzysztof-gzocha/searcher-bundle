@@ -20,18 +20,30 @@
   },
   "autoload": {
     "psr-4": {
-      "": "src/"
+      "KGzocha\\Bundle\\SearcherBundle\\": "src/KGzocha/Bundle/SearcherBundle/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "KGzocha\\Bundle\\SearcherBundle\\Test\\": "tests/"
     }
   },
   "require":{
     "php": ">=5.4",
     "symfony/framework-bundle": "^2.3",
-    "krzysztof-gzocha/searcher": "^2.3.1"
+    "krzysztof-gzocha/searcher": "^2.4.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "4.8.10",
-    "phing/phing": "^2.13@dev",
+    "phpunit/phpunit": "^4.8",
     "phpmd/phpmd": "dev-master",
-    "fabpot/php-cs-fixer": "dev-master"
+    "fabpot/php-cs-fixer": "dev-master",
+    "knplabs/knp-paginator-bundle": "^2.2.0",
+    "knplabs/knp-components": ">=1.2.4"
+  },
+  "scripts": {
+    "test": ["phpunit test/"],
+    "cs-fix": ["php-cs-fixer fix src/"],
+    "coverage": ["phpunit tests/ --coverage-clover=coverage.clover"],
+    "phpmd": ["phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode"]
   }
 }

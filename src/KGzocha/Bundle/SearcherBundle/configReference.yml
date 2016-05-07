@@ -18,7 +18,8 @@ k_gzocha_searcher:
 
       # optional
       searcher:
-        class: KGzocha\Searcher\Searcher\Searcher
+        wrapper_class: KGzocha\Searcher\WrappedResultsSearcher
+        class: KGzocha\Searcher\Searcher
         service: searcher_service
 
       context:

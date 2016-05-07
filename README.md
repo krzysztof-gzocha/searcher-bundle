@@ -152,13 +152,19 @@ public function searchAction(Request $request)
     // Now we can check if form is valid
 
     $searcher = $this->get('k_gzocha_searcher.people.searcher');
-    $results = $searcher->search($form->getData());
+    $results = $searcher->search($form->getData())->getResults();   // Read for 'wrapper_class'
     // Yay, we have our results!
 }
 ```
+
+### Wrapper class
+By default SearcherBundle will wrap Searcher into `WrappedResultsSearcher`,
+which has method `getResults()` that will return collection of your results.
+If you want to change this behaviour then you need to specify `wrapper_class` in searcher config.
+If you do not want any wrapper then just specify this field as null.
 
 ### Contributing
 All ideas and pull request are welcomed and appreciated.
 Please, feel free to share your thought via issues.
 
-Command to run tests: `bin/phing`.
+Command to run tests: `composer test`.

@@ -4,7 +4,7 @@ namespace KGzocha\Bundle\SearcherBundle\Searcher\Factory;
 
 use KGzocha\Searcher\Context\SearchingContextInterface;
 use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
-use KGzocha\Searcher\Searcher\Searcher;
+use KGzocha\Searcher\Searcher;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
