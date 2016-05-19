@@ -8,9 +8,8 @@ use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
- * @package KGzocha\Bundle\SearcherBundle\DependencyInjection
  */
-class ModelCollection implements ServiceDefinerInterface
+class CriteriaCollection implements ServiceDefinerInterface
 {
     /**
      * @param $contextId
@@ -24,7 +23,7 @@ class ModelCollection implements ServiceDefinerInterface
         array &$contextConfig,
         ContainerBuilder $container
     ) {
-        $collectionConfig = $contextConfig['model_collection'];
+        $collectionConfig = $contextConfig['criteria_collection'];
         self::checkCollectionParameters($contextId, $collectionConfig);
 
         if (isset($collectionConfig['service'])) {
@@ -35,13 +34,13 @@ class ModelCollection implements ServiceDefinerInterface
             );
 
             return $container->setDefinition(
-                sprintf('k_gzocha_searcher.%s.model_collection', $contextId),
+                sprintf('k_gzocha_searcher.%s.criteria_collection', $contextId),
                 $container->getDefinition($collectionConfig['service'])
             );
         }
 
         return $container->setDefinition(
-            sprintf('k_gzocha_searcher.%s.model_collection', $contextId),
+            sprintf('k_gzocha_searcher.%s.criteria_collection', $contextId),
             new Definition($collectionConfig['class'])
         );
     }
@@ -58,7 +57,7 @@ class ModelCollection implements ServiceDefinerInterface
             && !isset($collectionConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'You have to specify "class" or "service" for '.
-                'model_collection in searching context "%s"',
+                'criteria_collection in searching context "%s"',
                 $contextId
             ));
         }
@@ -76,7 +75,7 @@ class ModelCollection implements ServiceDefinerInterface
     ) {
         if (!$container->hasDefinition($collectionConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
-                'Service "%s" configured for model_collection in'.
+                'Service "%s" configured for criteria_collection in'.
                 'searching context "%s" does not exist',
                 $collectionConfig['service'],
                 $contextId

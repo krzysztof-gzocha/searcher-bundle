@@ -28,11 +28,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             'k_gzocha_searcher' => [
                 'contexts' => [
                     'people' => [
-                        'model_collection' => [
+                        'criteria_collection' => [
                             'class' => null,
                             'service' => 'model_service',
                         ],
-                        'imposer_collection' => [
+                        'builder_collection' => [
                             'class' => 'ImposerClass',
                             'service' => null
                         ],
@@ -45,28 +45,28 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             'service' => 'context_service',
                             'class' => null,
                         ],
-                        'models' => [
+                        'criteria' => [
                             [
-                                'class' => 'modelClass1',
-                                'name' => 'model1',
+                                'class' => 'criteriaClass1',
+                                'name' => 'criteria1',
                                 'service' => null,
                             ],
                             [
                                 'class' => null,
-                                'name' => 'model2',
-                                'service' => 'model2',
+                                'name' => 'criteria1',
+                                'service' => 'criteria2',
                             ]
                         ],
-                        'imposers' => [
+                        'builders' => [
                             [
-                                'class' => 'imposerClass1',
-                                'name' => 'imposer1',
+                                'class' => 'builderClass1',
+                                'name' => 'builder1',
                                 'service' => null,
                             ],
                             [
                                 'class' => null,
-                                'name' => 'imposer2',
-                                'service' => 'imposer2',
+                                'name' => 'builder2',
+                                'service' => 'builder2',
                             ],
                         ],
                     ],

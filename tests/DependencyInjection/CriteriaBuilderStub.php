@@ -3,6 +3,8 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
 use KGzocha\Searcher\Context\SearchingContextInterface;
+use KGzocha\Searcher\Criteria\CriteriaInterface;
+use KGzocha\Searcher\CriteriaBuilder\CriteriaBuilderInterface;
 use KGzocha\Searcher\FilterImposer\FilterImposerInterface;
 use KGzocha\Searcher\FilterModel\FilterModelInterface;
 
@@ -10,13 +12,13 @@ use KGzocha\Searcher\FilterModel\FilterModelInterface;
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\Test\DependencyInjection
  */
-class FilterImposerStub implements FilterImposerInterface
+class CriteriaBuilderStub implements CriteriaBuilderInterface
 {
     /**
      * @inheritDoc
      */
-    public function imposeFilter(
-        FilterModelInterface $filterModel,
+    public function buildCriteria(
+        CriteriaInterface $criteria,
         SearchingContextInterface $searchingContext
     ) {
         return true;
@@ -25,9 +27,8 @@ class FilterImposerStub implements FilterImposerInterface
     /**
      * @inheritDoc
      */
-    public function supportsModel(
-        FilterModelInterface $filterModel
-    ) {
+    public function allowsCriteria(CriteriaInterface $criteria)
+    {
         return true;
     }
 
@@ -39,4 +40,5 @@ class FilterImposerStub implements FilterImposerInterface
     ) {
         return true;
     }
+
 }

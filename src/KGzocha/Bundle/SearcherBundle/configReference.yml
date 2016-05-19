@@ -7,13 +7,13 @@ k_gzocha_searcher:
   contexts:
     people:
       # optional
-      model_collection:
-        class: KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection
+      criteria_collection:
+        class: KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection
         service: model_collection_service
 
       # optional
-      imposer_collection:
-        class: KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection
+      builder_collection:
+        class: KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection
         service: imposer_service
 
       # optional
@@ -26,12 +26,12 @@ k_gzocha_searcher:
         class: SearchingContextClass
         service: context_service
 
-      models:
-        - { class: \AgeRangeModel, name: ageRange1, service: abc1 }
-        - { class: \AgeRangeModel, name: ageRange2, service: abc2 }
-        - { class: \AgeRangeModel, name: ageRange3, service: abc3 }
+      criteria:
+        - { class: \AgeRangeCriteria, name: ageRange1, service: abc1 }
+        - { class: \AgeRangeCriteria, name: ageRange2, service: abc2 }
+        - { class: \AgeRangeCriteria, name: ageRange3, service: abc3 }
 
-      imposers:
-        - { class: \AgeRangeImposer, name: ageRange1, service: def1 }
-        - { class: \AgeRangeImposer, name: ageRange1, service: def2 }
-        - { class: \AgeRangeImposer, name: ageRange1, service: def3 }
+      builders:
+        - { class: \AgeRangeCriteriaBuilder, name: ageRange1, service: def1 }
+        - { class: \AgeRangeCriteriaBuilder, name: ageRange1, service: def2 }
+        - { class: \AgeRangeCriteriaBuilder, name: ageRange1, service: def3 }

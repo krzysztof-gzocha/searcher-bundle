@@ -1,6 +1,17 @@
+<img align="right" src="https://camo.githubusercontent.com/03659f3fcddeaec49aa2f494c1d4aff0ec9cbd36/687474703a2f2f7777772e636c6b65722e636f6d2f636c6970617274732f612f632f612f382f31313934393936353638313938333637303238396b63616368656772696e642e7376672e7468756d622e706e67"/>
+
 # SearcherBundle [![Build Status](https://travis-ci.org/krzysztof-gzocha/searcher-bundle.svg?branch=master)](https://travis-ci.org/krzysztof-gzocha/searcher-bundle) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/krzysztof-gzocha/searcher-bundle/?branch=master)
 
-This bundle is providing integration between Symfony and [Searcher](https://github.com/krzysztof-gzocha/searcher)
+This bundle is providing integration between Symfony and **[Searcher](https://github.com/krzysztof-gzocha/searcher)**
+
+### What is Searcher?
+*Searcher* is a library completely decoupled from any framework created in order to simplify construction of complex searching queries basing on passed criteria.
+It's basic idea is to split each searching *filter* to separate class.
+Regardless of what do you want to search: entities in MySQL, MongoDB or just files.
+Supported PHP versions: >=5.4, 7 and HHVM.
+
+### Full documentation
+Full documentation can be found at [http://searcher.rtfd.io/](http://searcher.readthedocs.io/en/stable/introduction.html)
 
 ### Installation
 You can install this bundle via composer
@@ -30,26 +41,26 @@ k_gzocha_searcher:
       context:
         service: your_searching_context_service_id
 
-      models:
-        - { class: \AgeRangeModel, name: age_range}
-        - { service: some_service_id, name: other_model }
+      criteria:
+        - { class: \AgeRangeCriteria, name: age_range}
+        - { service: some_service_id, name: other_criteria }
 
-      imposers:
-        - { class: \AgeRangeImposer, name: age_range }
-        - { service: other_service_id, name: my_imposer }
+      builders:
+        - { class: \AgeRangeCriteriaBuilder, name: age_range }
+        - { service: other_service_id, name: my_criteria_builder }
 ```
 As you can see you can specify everything as a simple class or as your own service.
-This configuration will create our `people` context and create all required services (imposer collection, model collection, searcher and context), so you can access them and make use of them. For example to access Searcher instance from controller you can simply:
+This configuration will create our `people` context and create all required services (builder collection, criteria collection, searcher and context), so you can access them and make use of them. For example to access Searcher instance from controller you can simply:
 ```php
 $this->get('k_gzocha_searcher.people.searcher');
 ```
-or to access `age_range` model:
+or to access `age_range` criteria:
 ```php
-$this->get('k_gzocha_searcher.people.model.age_range');
+$this->get('k_gzocha_searcher.people.criteria.age_range');
 ```
-or access `my_imposer`:
+or access `my_criteria_builder`:
 ```php
-$this->get('k_gzocha_searcher.people.imposer.my_imposer');
+$this->get('k_gzocha_searcher.people.builder.my_criteria_builder');
 ```
 I guess it's pretty easy to understand this naming convention.
 In this example you need to define only 1 service on your own - SearchingContext service with id specified in the config (`your_searching_context_service_id`). You can do it like this:
@@ -60,18 +71,17 @@ your_searching_context_service_id:
     - @my_search.query_builder  # Or any QueryBuilder service
 ```
 ### Code
-For this example we will use simple **AgeRangeModel** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own class or service.
+For this example we will use simple **AgeRangeCriteria** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but of course you can use your own class or service.
 ```php
-class AgeRangeFilterModel implements FilterModelInterface
+class AgeRangeCriteria implements CriteriaInterface
 {
     private $minimalAge;
     private $maximalAge;
 
     /**
     * Only required method.
-    * If will return true, then it will be passed to some of the FilterImposer(s)
     */
-    public function isImposed()
+    public function shouldBeApplied()
     {
         return null !== $this->minimalAge && null !== $this->maximalAge;
     }
@@ -79,27 +89,27 @@ class AgeRangeFilterModel implements FilterModelInterface
     // getters, setters, what ever
 }
 ```
-We will also use **AgeRangeImposer** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but ofcourse you can use your own class or service.
+We will also use **AgeRangeCriteriaBuilder** (described in [here](https://github.com/krzysztof-gzocha/searcher)), but of course you can use your own class or service.
 ```php
-class AgeRangeImposer implements FilterImposerInterface
+class AgeRangeCriteriaBuilder implements FilterImposerInterface
 {
-    public function imposeFilter(
-        FilterModelInterface $filterModel,
+    public function buildCriteria(
+        CriteriaInterface $criteria,
         SearchingContextInterface $searchingContext
     ) {
         $searchingContext
             ->getQueryBuilder()
             ->andWhere('e.age >= :minimalAge')
             ->andWhere('e.age <= :maximalAge')
-            ->setParameter('minimalAge', $filterModel->getMinimalAge())
-            ->setParameter('maximalAge', $filterModel->getMaximalAge());
+            ->setParameter('minimalAge', $criteria->getMinimalAge())
+            ->setParameter('maximalAge', $criteria->getMaximalAge());
     }
 
-    public function supportsModel(
-        FilterModelInterface $filterModel
+    public function allowsCriteria(
+        CriteriaInterface $criteria
     ) {
-        // No need to check isImposed(). Searcher will check it
-        return $filterModel instanceof AgeRangeFilterModel;
+        // No need to check shouldBeApplied(). Searcher will check it
+        return $criteria instanceof AgeRangeCriteria;
     }
 
     /**
@@ -108,13 +118,13 @@ class AgeRangeImposer implements FilterImposerInterface
     public function supportsSearchingContext(
         SearchingContextInterface $searchingContext
     ) {
-        return $searchingContext instanceof \Doctrine\ORM\QueryBuilder;
+        return $searchingContext instanceof \KGzocha\Searcher\Context\Doctrine\QueryBuilderSearchingContext;
     }
 }
 ```
 ### Form (optional)
-Now we can create example form. Form will allow Symfony to take care of population and validation our models from request.
-This step is optional and you don't have to populate models from request. You can do this however you want to.
+Now we can create example form. Form will allow Symfony to take care of population and validation our criteria from request.
+This step is optional and you don't have to populate criteria from request. You can do this however you want to.
 ```php
 use KGzocha\Bundle\SearcherBundle\Form\SearchForm;
 
@@ -132,8 +142,8 @@ class MySearchForm extends SearchForm
             /** and any other fields.. **/
             ->add('<PARAM NAME IN REQUEST>', '<ANY FORM TYPE>', [
                 'property_path' => $this->getPath(
-                    '<MODEL NAME FROM CONFIG>',
-                    '<MODELS ATTRIBUTE NAME>'
+                    '<CRITERIA NAME FROM CONFIG>',
+                    '<CRITERIA ATTRIBUTE NAME>'
                 ),
             ]);
     }
@@ -145,7 +155,7 @@ public function searchAction(Request $request)
 {
     $form = $this->createForm(
         new MySearchForm(),
-        $this->get('k_gzocha_searcher.people.model_collection')
+        $this->get('k_gzocha_searcher.people.criteria_collection')
     );
 
     $form->handleRequest($request);
@@ -170,3 +180,7 @@ All ideas and pull request are welcomed and appreciated.
 Please, feel free to share your thought via issues.
 
 Command to run tests: `composer test`.
+
+#### License
+License: MIT
+Author: Krzysztof Gzocha [![](https://img.shields.io/badge/Twitter-%40kgzocha-blue.svg)](https://twitter.com/kgzocha)

@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Form;
 
-use KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection;
+use KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +19,7 @@ abstract class SearchForm extends AbstractType
     {
         $resolver->setDefault(
             'data_class',
-            NamedFilterModelCollection::class
+            NamedCriteriaCollection::class
         );
     }
 

@@ -2,18 +2,18 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
-use KGzocha\Searcher\FilterModel\FilterModelInterface;
+use KGzocha\Searcher\Criteria\CriteriaInterface;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\Test\DependencyInjection
  */
-class FilterModelStub implements FilterModelInterface
+class CriteriaStub implements CriteriaInterface
 {
     /**
      * @inheritDoc
      */
-    public function isImposed()
+    public function shouldBeApplied()
     {
         return true;
     }

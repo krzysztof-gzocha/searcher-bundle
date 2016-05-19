@@ -14,8 +14,8 @@ class Configuration implements ConfigurationInterface
 {
     const SEARCHER_CLASS = 'KGzocha\Searcher\Searcher';
     const WRAPPER_CLASS = 'KGzocha\Searcher\WrappedResultsSearcher';
-    const MODEL_COLLECTION_CLASS = 'KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection';
-    const IMPOSER_COLLECTION_CLASS = 'KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection';
+    const CRITERIA_COLLECTION_CLASS = 'KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection';
+    const BUILDER_COLLECTION_CLASS = 'KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
 
     /**
      * @inheritdoc
@@ -33,12 +33,12 @@ class Configuration implements ConfigurationInterface
                 ->useAttributeAsKey('context_id')
                 ->prototype('array')
                 ->children()
-                    ->append($this->getModelCollectionConfiguration())
-                    ->append($this->getImposerCollectionConfiguration())
-                    ->append($this->getModelsConfiguration())
-                    ->append($this->getImposersConfiguration())
-                    ->append($this->getSearcherConfiguration())
-                    ->append($this->getContextConfiguration())
+                    ->append($this->getCriteriaCollectionNode())
+                    ->append($this->getBuilderCollectionNode())
+                    ->append($this->getCriteriaNode())
+                    ->append($this->getBuildersNode())
+                    ->append($this->getSearcher())
+                    ->append($this->getContextNode())
                 ->end()
             ->end();
 
@@ -48,15 +48,15 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getModelCollectionConfiguration()
+    protected function getCriteriaCollectionNode()
     {
-        $node = new ArrayNodeDefinition('model_collection');
+        $node = new ArrayNodeDefinition('criteria_collection');
 
         $node
             ->addDefaultsIfNotSet()
             ->canBeUnset()
             ->children()
-                ->scalarNode('class')->defaultValue(self::MODEL_COLLECTION_CLASS)->end()
+                ->scalarNode('class')->defaultValue(self::CRITERIA_COLLECTION_CLASS)->end()
                 ->scalarNode('service')->defaultValue(null)->end()
             ->end();
 
@@ -66,15 +66,15 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getImposerCollectionConfiguration()
+    protected function getBuilderCollectionNode()
     {
-        $node = new ArrayNodeDefinition('imposer_collection');
+        $node = new ArrayNodeDefinition('builder_collection');
 
         $node
             ->addDefaultsIfNotSet()
             ->canBeUnset()
             ->children()
-                ->scalarNode('class')->defaultValue(self::IMPOSER_COLLECTION_CLASS)->end()
+                ->scalarNode('class')->defaultValue(self::BUILDER_COLLECTION_CLASS)->end()
                 ->scalarNode('service')->defaultValue(null)->end()
             ->end();
 
@@ -84,7 +84,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getSearcherConfiguration()
+    protected function getSearcher()
     {
         $node = new ArrayNodeDefinition('searcher');
 
@@ -103,7 +103,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getContextConfiguration()
+    protected function getContextNode()
     {
         $node = new ArrayNodeDefinition('context');
 
@@ -121,9 +121,9 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getModelsConfiguration()
+    protected function getCriteriaNode()
     {
-        $node = new ArrayNodeDefinition('models');
+        $node = new ArrayNodeDefinition('criteria');
 
         $node
             ->prototype('array')
@@ -139,9 +139,9 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getImposersConfiguration()
+    protected function getBuildersNode()
     {
-        $node = new ArrayNodeDefinition('imposers');
+        $node = new ArrayNodeDefinition('builders');
 
         $node
             ->prototype('array')
