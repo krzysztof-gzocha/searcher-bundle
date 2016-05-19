@@ -37,7 +37,7 @@
     "phpunit/phpunit": "^4.8",
     "phpmd/phpmd": "dev-master",
     "fabpot/php-cs-fixer": "dev-master",
-    "knplabs/knp-paginator-bundle": "^3.0.0",
+    "knplabs/knp-paginator-bundle": "^2.2.0",
     "knplabs/knp-components": ">=1.2.4"
   },
   "scripts": {
