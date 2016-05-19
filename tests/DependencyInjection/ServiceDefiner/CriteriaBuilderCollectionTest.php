@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\ServiceDefiner;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\ImposerCollection;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaBuilderCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -18,12 +18,12 @@ class ImposerCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $contextConfig = [
-            'imposer_collection' => [
+            'builder_collection' => [
                 'class' => '\\stdClass',
             ],
         ];
 
-        ImposerCollection::defineServices(
+        CriteriaBuilderCollection::defineServices(
             'test',
             $contextConfig,
             $container
@@ -31,11 +31,11 @@ class ImposerCollectionTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.imposer_collection'
+            'k_gzocha_searcher.test.builder_collection'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.imposer_collection')
+            $container->get('k_gzocha_searcher.test.builder_collection')
         );
     }
 
@@ -43,7 +43,7 @@ class ImposerCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $contextConfig = [
-            'imposer_collection' => [
+            'builder_collection' => [
                 'service' => 'user_defined_collection_service',
             ],
         ];
@@ -51,7 +51,7 @@ class ImposerCollectionTest extends \PHPUnit_Framework_TestCase
             'user_defined_collection_service',
             new Definition('\\stdClass')
         );
-        ImposerCollection::defineServices(
+        CriteriaBuilderCollection::defineServices(
             'test',
             $contextConfig,
             $container
@@ -59,11 +59,11 @@ class ImposerCollectionTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.imposer_collection'
+            'k_gzocha_searcher.test.builder_collection'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.imposer_collection')
+            $container->get('k_gzocha_searcher.test.builder_collection')
         );
     }
 
@@ -74,11 +74,11 @@ class ImposerCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $contextConfig = [
-            'imposer_collection' => [
+            'builder_collection' => [
                 'wrong_param' => 'wrong_value',
             ],
         ];
-        ImposerCollection::defineServices(
+        CriteriaBuilderCollection::defineServices(
             'test',
             $contextConfig,
             $container

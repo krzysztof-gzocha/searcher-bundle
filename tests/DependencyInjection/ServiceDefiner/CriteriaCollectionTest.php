@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\ServiceDefiner;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\ModelCollection;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaCollection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -12,18 +12,18 @@ use Symfony\Component\DependencyInjection\Definition;
  * @group di
  * @SuppressWarnings("static")
  */
-class ModelCollectionTest extends \PHPUnit_Framework_TestCase
+class CriteriaCollectionTest extends \PHPUnit_Framework_TestCase
 {
     public function testCollectionDefinedWithClass()
     {
         $container = new ContainerBuilder();
         $contextConfig = [
-            'model_collection' => [
+            'criteria_collection' => [
                 'class' => '\\stdClass',
             ],
         ];
 
-        ModelCollection::defineServices(
+        CriteriaCollection::defineServices(
             'test',
             $contextConfig,
             $container
@@ -31,11 +31,11 @@ class ModelCollectionTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.model_collection'
+            'k_gzocha_searcher.test.criteria_collection'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.model_collection')
+            $container->get('k_gzocha_searcher.test.criteria_collection')
         );
     }
 
@@ -43,7 +43,7 @@ class ModelCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $contextConfig = [
-            'model_collection' => [
+            'criteria_collection' => [
                 'service' => 'user_defined_collection_service',
             ],
         ];
@@ -51,7 +51,7 @@ class ModelCollectionTest extends \PHPUnit_Framework_TestCase
             'user_defined_collection_service',
             new Definition('\\stdClass')
         );
-        ModelCollection::defineServices(
+        CriteriaCollection::defineServices(
             'test',
             $contextConfig,
             $container
@@ -59,11 +59,11 @@ class ModelCollectionTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.model_collection'
+            'k_gzocha_searcher.test.criteria_collection'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.model_collection')
+            $container->get('k_gzocha_searcher.test.criteria_collection')
         );
     }
 
@@ -74,11 +74,11 @@ class ModelCollectionTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $contextConfig = [
-            'model_collection' => [
+            'criteria_collection' => [
                 'wrong_param' => 'wrong_value',
             ],
         ];
-        ModelCollection::defineServices(
+        CriteriaCollection::defineServices(
             'test',
             $contextConfig,
             $container

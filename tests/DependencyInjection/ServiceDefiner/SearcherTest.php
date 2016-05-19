@@ -104,8 +104,8 @@ class SearcherTest extends \PHPUnit_Framework_TestCase
             ],
         ];
         $container->setDefinition(
-            'k_gzocha_searcher.test.imposer_collection',
-            new Definition('KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection')
+            'k_gzocha_searcher.test.builder_collection',
+            new Definition('\KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection')
         );
         $container->setDefinition(
             'k_gzocha_searcher.test.context',

@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\ServiceDefiner;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Imposers;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaBuilder;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -12,19 +12,19 @@ use Symfony\Component\DependencyInjection\Definition;
  * @group di
  * @SuppressWarnings("static")
  */
-class ImposersTest extends \PHPUnit_Framework_TestCase
+class CriteriaBuilderTest extends \PHPUnit_Framework_TestCase
 {
     public function testCollectionDefinedWithClass()
     {
         $container = $this->getContainer();
         $contextConfig = [
-            'imposers' => [
-                ['class' => '\\stdClass', 'name' => 'imposer1'],
-                ['class' => '\\stdClass', 'name' => 'imposer2']
+            'builders' => [
+                ['class' => '\\stdClass', 'name' => 'builder1'],
+                ['class' => '\\stdClass', 'name' => 'builder2']
             ],
         ];
 
-        Imposers::defineServices(
+        CriteriaBuilder::defineServices(
             'test',
             $contextConfig,
             $container
@@ -32,18 +32,18 @@ class ImposersTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.imposer.imposer1'
+            'k_gzocha_searcher.test.builder.builder1'
         ));
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.imposer.imposer2'
+            'k_gzocha_searcher.test.builder.builder2'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.imposer.imposer1')
+            $container->get('k_gzocha_searcher.test.builder.builder1')
         );
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.imposer.imposer2')
+            $container->get('k_gzocha_searcher.test.builder.builder2')
         );
     }
 
@@ -51,20 +51,20 @@ class ImposersTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $contextConfig = [
-            'imposers' => [
-                ['service' => 'user_defined_imposer1', 'name' => 'imposer1'],
-                ['service' => 'user_defined_imposer2', 'name' => 'imposer2']
+            'builders' => [
+                ['service' => 'user_defined_builder1', 'name' => 'builder1'],
+                ['service' => 'user_defined_builder2', 'name' => 'builder2']
             ],
         ];
         $container->setDefinition(
-            'user_defined_imposer1',
+            'user_defined_builder1',
             new Definition('\\stdClass')
         );
         $container->setDefinition(
-            'user_defined_imposer2',
+            'user_defined_builder2',
             new Definition('\\stdClass')
         );
-        Imposers::defineServices(
+        CriteriaBuilder::defineServices(
             'test',
             $contextConfig,
             $container
@@ -72,18 +72,18 @@ class ImposersTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.imposer.imposer1'
+            'k_gzocha_searcher.test.builder.builder1'
         ));
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.imposer.imposer2'
+            'k_gzocha_searcher.test.builder.builder2'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.imposer.imposer1')
+            $container->get('k_gzocha_searcher.test.builder.builder1')
         );
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.imposer.imposer2')
+            $container->get('k_gzocha_searcher.test.builder.builder2')
         );
     }
 
@@ -94,7 +94,7 @@ class ImposersTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $contextConfig = [
-            'imposers' => [
+            'builders' => [
                 [
                     'no_name' => 'no_name',
                     'class' => 'bla',
@@ -102,7 +102,7 @@ class ImposersTest extends \PHPUnit_Framework_TestCase
                 ]
             ],
         ];
-        Imposers::defineServices(
+        CriteriaBuilder::defineServices(
             'test',
             $contextConfig,
             $container
@@ -118,8 +118,8 @@ class ImposersTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $container->setDefinition(
-            'k_gzocha_searcher.test.imposer_collection',
-            new Definition('\KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection')
+            'k_gzocha_searcher.test.builder_collection',
+            new Definition('\KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection')
         );
 
         return $container;

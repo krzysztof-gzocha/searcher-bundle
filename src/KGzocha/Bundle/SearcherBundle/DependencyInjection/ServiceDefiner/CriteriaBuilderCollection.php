@@ -8,9 +8,8 @@ use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
- * @package KGzocha\Bundle\SearcherBundle\DependencyInjection
  */
-class ImposerCollection implements ServiceDefinerInterface
+class CriteriaBuilderCollection implements ServiceDefinerInterface
 {
     /**
      * @param $contextId
@@ -24,7 +23,7 @@ class ImposerCollection implements ServiceDefinerInterface
         array &$contextConfig,
         ContainerBuilder $container
     ) {
-        $collectionConfig = $contextConfig['imposer_collection'];
+        $collectionConfig = $contextConfig['builder_collection'];
         self::checkCollectionParameters($contextId, $collectionConfig);
 
         // Build from service
@@ -36,14 +35,14 @@ class ImposerCollection implements ServiceDefinerInterface
             );
 
             return $container->setDefinition(
-                sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId),
+                sprintf('k_gzocha_searcher.%s.builder_collection', $contextId),
                 $container->getDefinition($collectionConfig['service'])
             );
         }
 
         // Build from class
         return $container->setDefinition(
-            sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId),
+            sprintf('k_gzocha_searcher.%s.builder_collection', $contextId),
             new Definition($collectionConfig['class'])
         );
     }
@@ -60,7 +59,7 @@ class ImposerCollection implements ServiceDefinerInterface
             && !isset($collectionConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'You have to specify "class" or "service" for '.
-                'imposer_collection in searching context "%s"',
+                'builder_collection in searching context "%s"',
                 $contextId
             ));
         }
@@ -78,7 +77,7 @@ class ImposerCollection implements ServiceDefinerInterface
     ) {
         if (!$container->hasDefinition($collectionConfig['service'])) {
             throw new InvalidDefinitionException(sprintf(
-                'Service "%s" configured for imposer_collection in'.
+                'Service "%s" configured for builder_collection in'.
                 'searching context "%s" does not exist',
                 $collectionConfig['service'],
                 $contextId

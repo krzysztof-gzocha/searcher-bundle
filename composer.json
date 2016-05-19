@@ -31,17 +31,17 @@
   "require":{
     "php": ">=5.4",
     "symfony/framework-bundle": "^2.3",
-    "krzysztof-gzocha/searcher": "^2.4.0"
+    "krzysztof-gzocha/searcher": "^3.0.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^4.8",
     "phpmd/phpmd": "dev-master",
     "fabpot/php-cs-fixer": "dev-master",
-    "knplabs/knp-paginator-bundle": "^2.2.0",
+    "knplabs/knp-paginator-bundle": "^3.0.0",
     "knplabs/knp-components": ">=1.2.4"
   },
   "scripts": {
-    "test": ["phpunit test/"],
+    "test": ["phpunit tests/"],
     "cs-fix": ["php-cs-fixer fix src/"],
     "coverage": ["phpunit tests/ --coverage-clover=coverage.clover"],
     "phpmd": ["phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode"]

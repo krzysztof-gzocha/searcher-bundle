@@ -3,8 +3,8 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
-use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollectionInterface;
-use KGzocha\Searcher\FilterModel\Collection\FilterModelCollectionInterface;
+use KGzocha\Searcher\Criteria\Collection\CriteriaCollectionInterface;
+use KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollectionInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -27,17 +27,17 @@ class KGzochaSearcherExtensionTest extends \PHPUnit_Framework_TestCase
         $extension->load($this->getMinimalConfig(), $container);
 
         $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.searcher'));
-        $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.imposer_collection'));
-        $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.model_collection'));
+        $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.builder_collection'));
+        $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.criteria_collection'));
         $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.context'));
 
-        /** @var FilterImposerCollectionInterface $imposerCollection */
-        $imposerCollection = $container->get('k_gzocha_searcher.people.imposer_collection');
-        $this->assertCount(2, $imposerCollection->getFilterImposers());
+        /** @var CriteriaBuilderCollectionInterface $builderCollection */
+        $builderCollection = $container->get('k_gzocha_searcher.people.builder_collection');
+        $this->assertCount(2, $builderCollection->getCriteriaBuilders());
 
-        /** @var FilterModelCollectionInterface $modelCollection */
-        $modelCollection = $container->get('k_gzocha_searcher.people.model_collection');
-        $this->assertCount(3, $modelCollection->getFilterModels());
+        /** @var CriteriaCollectionInterface $criteriaCollection */
+        $criteriaCollection = $container->get('k_gzocha_searcher.people.criteria_collection');
+        $this->assertCount(3, $criteriaCollection->getCriteria());
 
         $this->assertInstanceOf(
             '\KGzocha\Bundle\SearcherBundle\Test\SearchingContextStub',
@@ -57,27 +57,27 @@ class KGzochaSearcherExtensionTest extends \PHPUnit_Framework_TestCase
                         'context' => [
                             'service' => 'my_context',
                         ],
-                        'models' => [
+                        'criteria' => [
                             [
-                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\FilterModelStub',
+                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CriteriaStub',
                                 'name' => 'model1',
                             ],
                             [
-                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\FilterModelStub',
+                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CriteriaStub',
                                 'name' => 'model2',
                             ],
                             [
-                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\FilterModelStub',
+                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CriteriaStub',
                                 'name' => 'model3',
                             ]
                         ],
-                        'imposers' => [
+                        'builders' => [
                             [
-                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\FilterImposerStub',
+                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CriteriaBuilderStub',
                                 'name' => 'imposer1',
                             ],
                             [
-                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\FilterImposerStub',
+                                'class' => '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CriteriaBuilderStub',
                                 'name' => 'imposer2',
                             ]
                         ],

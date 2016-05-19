@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  * @package KGzocha\Bundle\SearcherBundle\DependencyInjection
  */
-class Models implements ServiceDefinerInterface
+class CriteriaBuilder implements ServiceDefinerInterface
 {
     /**
      * @param $contextId
@@ -25,7 +25,7 @@ class Models implements ServiceDefinerInterface
         array &$contextConfig,
         ContainerBuilder $container
     ) {
-        foreach ($contextConfig['models'] as &$model) {
+        foreach ($contextConfig['builders'] as &$model) {
             self::defineModel($contextId, $model, $container);
         }
     }
@@ -44,22 +44,23 @@ class Models implements ServiceDefinerInterface
     ) {
         if (!isset($model['name'])) {
             throw new InvalidDefinitionException(sprintf(
-                'At least one model is missing name parameter'.
+                'At least one builder is missing name parameter'.
                 ' in searching context "%s"',
                 $contextId
             ));
         }
 
         $definitionName = sprintf(
-            'k_gzocha_searcher.%s.model.%s',
+            'k_gzocha_searcher.%s.builder.%s',
             $contextId,
             $model['name']
         );
 
         self::checkParameters($contextId, $model);
 
+        // Build from service
         if (isset($model['service'])) {
-            self::checkServiceExists($container, $contextId, $model);
+            self::checkServiceExsists($container, $contextId, $model);
             $definition = $container->setDefinition(
                 $definitionName,
                 $container->getDefinition($model['service'])
@@ -69,6 +70,7 @@ class Models implements ServiceDefinerInterface
             return $definition;
         }
 
+        // Build from class
         $definition = $container->setDefinition(
             $definitionName,
             new Definition($model['class'])
@@ -82,13 +84,15 @@ class Models implements ServiceDefinerInterface
      * @param string $contextId
      * @param array $model
      */
-    private static function checkParameters($contextId, array &$model)
-    {
+    private static function checkParameters(
+        $contextId,
+        array &$model
+    ) {
         if (!isset($model['class'])
             && !isset($model['service'])) {
             throw new InvalidDefinitionException(sprintf(
                 'You have to specify "class" or "service" for '.
-                'all models in searching context "%s"',
+                'all builders in searching context "%s"',
                 $contextId
             ));
         }
@@ -96,17 +100,17 @@ class Models implements ServiceDefinerInterface
 
     /**
      * @param ContainerBuilder $container
-     * @param string$contextId
+     * @param string $contextId
      * @param array $model
      */
-    private static function checkServiceExists(
+    private static function checkServiceExsists(
         ContainerBuilder $container,
         $contextId,
         array &$model
     ) {
         if (!$container->hasDefinition($model['service'])) {
             throw new InvalidDefinitionException(sprintf(
-                'Service "%s" configured for model in'.
+                'Service "%s" configured for builder in'.
                 'searching context "%s" does not exist',
                 $model['service'],
                 $contextId
@@ -126,12 +130,12 @@ class Models implements ServiceDefinerInterface
     ) {
         $container
             ->getDefinition(sprintf(
-                'k_gzocha_searcher.%s.model_collection',
+                'k_gzocha_searcher.%s.builder_collection',
                 $contextId
             ))
             ->addMethodCall(
-                'addNamedFilterModel',
-                [$name, new Reference($name)]
+                'addCriteriaBuilder',
+                [new Reference($name)]
             );
     }
 }

@@ -2,10 +2,10 @@
 
 namespace KGzocha\Bundle\SearcherBundle\DependencyInjection;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\ImposerCollection;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Imposers;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\ModelCollection;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Models;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaBuilderCollection;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaBuilder;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaCollection;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Criteria;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Searcher;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\SearchingContext;
 use Symfony\Component\Config\FileLocator;
@@ -42,16 +42,16 @@ class KGzochaSearcherExtension extends Extension
     private function defineContexts(array &$config, ContainerBuilder $container)
     {
         foreach ($config['contexts'] as $contextId => &$context) {
-            ModelCollection::defineServices(
+            CriteriaCollection::defineServices(
                 $contextId, $context, $container
             );
-            ImposerCollection::defineServices(
+            CriteriaBuilderCollection::defineServices(
                 $contextId, $context, $container
             );
-            Models::defineServices(
+            Criteria::defineServices(
                 $contextId, $context, $container
             );
-            Imposers::defineServices(
+            CriteriaBuilder::defineServices(
                 $contextId, $context, $container
             );
             SearchingContext::defineServices(

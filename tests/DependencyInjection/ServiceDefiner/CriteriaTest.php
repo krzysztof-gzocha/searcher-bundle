@@ -2,7 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\ServiceDefiner;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Models;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Criteria;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -12,19 +12,19 @@ use Symfony\Component\DependencyInjection\Definition;
  * @group di
  * @SuppressWarnings("static")
  */
-class ModelsTest extends \PHPUnit_Framework_TestCase
+class CriteriaTest extends \PHPUnit_Framework_TestCase
 {
     public function testCollectionDefinedWithClass()
     {
         $container = $this->getContainer();
         $contextConfig = [
-            'models' => [
-                ['class' => '\\stdClass', 'name' => 'model1'],
-                ['class' => '\\stdClass', 'name' => 'model2']
+            'criteria' => [
+                ['class' => '\\stdClass', 'name' => 'criteria1'],
+                ['class' => '\\stdClass', 'name' => 'criteria2']
             ],
         ];
 
-        Models::defineServices(
+        Criteria::defineServices(
             'test',
             $contextConfig,
             $container
@@ -32,18 +32,18 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.model.model1'
+            'k_gzocha_searcher.test.criteria.criteria1'
         ));
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.model.model2'
+            'k_gzocha_searcher.test.criteria.criteria2'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.model.model1')
+            $container->get('k_gzocha_searcher.test.criteria.criteria1')
         );
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.model.model2')
+            $container->get('k_gzocha_searcher.test.criteria.criteria2')
         );
     }
 
@@ -51,20 +51,20 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $contextConfig = [
-            'models' => [
-                ['service' => 'user_defined_model1', 'name' => 'model1'],
-                ['service' => 'user_defined_model2', 'name' => 'model2']
+            'criteria' => [
+                ['service' => 'user_defined_criteria1', 'name' => 'criteria1'],
+                ['service' => 'user_defined_criteria2', 'name' => 'criteria2']
             ],
         ];
         $container->setDefinition(
-            'user_defined_model1',
+            'user_defined_criteria1',
             new Definition('\\stdClass')
         );
         $container->setDefinition(
-            'user_defined_model2',
+            'user_defined_criteria2',
             new Definition('\\stdClass')
         );
-        Models::defineServices(
+        Criteria::defineServices(
             'test',
             $contextConfig,
             $container
@@ -72,18 +72,18 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
 
         $container->compile();
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.model.model1'
+            'k_gzocha_searcher.test.criteria.criteria1'
         ));
         $this->assertTrue($container->hasDefinition(
-            'k_gzocha_searcher.test.model.model2'
+            'k_gzocha_searcher.test.criteria.criteria2'
         ));
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.model.model1')
+            $container->get('k_gzocha_searcher.test.criteria.criteria1')
         );
         $this->assertInstanceOf(
             '\\stdClass',
-            $container->get('k_gzocha_searcher.test.model.model2')
+            $container->get('k_gzocha_searcher.test.criteria.criteria2')
         );
     }
 
@@ -94,7 +94,7 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainer();
         $contextConfig = [
-            'models' => [
+            'criteria' => [
                 [
                     'no_name' => 'no_name',
                     'class' => 'bla',
@@ -102,7 +102,7 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
                 ]
             ],
         ];
-        Models::defineServices(
+        Criteria::defineServices(
             'test',
             $contextConfig,
             $container
@@ -118,8 +118,8 @@ class ModelsTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         $container->setDefinition(
-            'k_gzocha_searcher.test.model_collection',
-            new Definition('\KGzocha\Searcher\FilterModel\Collection\NamedFilterModelCollection')
+            'k_gzocha_searcher.test.criteria_collection',
+            new Definition('\KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection')
         );
 
         return $container;

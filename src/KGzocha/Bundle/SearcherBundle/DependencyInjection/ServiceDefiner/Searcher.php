@@ -40,7 +40,7 @@ class Searcher implements ServiceDefinerInterface
         if ($searcherConfig[self::CLASS_KEY] === Configuration::SEARCHER_CLASS) {
             $definition
                 ->addArgument($container->getDefinition(
-                    sprintf('k_gzocha_searcher.%s.imposer_collection', $contextId)
+                    sprintf('k_gzocha_searcher.%s.builder_collection', $contextId)
                 ))
                 ->addArgument($container->getDefinition(
                     sprintf('k_gzocha_searcher.%s.context', $contextId)
