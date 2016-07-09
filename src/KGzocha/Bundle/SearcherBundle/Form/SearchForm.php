@@ -35,18 +35,18 @@ abstract class SearchForm extends AbstractType
      * Will return string that can be used to configure "property_path" parameter
      * of single field in a form.
      *
-     * @param string $modelName is a name of filter model
-     * @param string|null $propertyName is a name of parameter inside filter model.
+     * @param string      $criteriaName is a name of criteria
+     * @param string|null $propertyName is a name of parameter inside criteria.
      * If null $modelName will be used
      *
      * @return string
      */
-    protected function getPath($modelName, $propertyName = null)
+    protected function getPath($criteriaName, $propertyName = null)
     {
         if (!$propertyName) {
-            $propertyName = $modelName;
+            $propertyName = $criteriaName;
         }
 
-        return sprintf('filterModels[%s].%s', $modelName, $propertyName);
+        return sprintf('criteria[%s].%s', $criteriaName, $propertyName);
     }
 }

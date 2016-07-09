@@ -12,7 +12,8 @@
   "suggest": {
     "doctrine/orm": "to use with Doctrine's ORM",
     "doctrine/mongodb-odm": "to use with Doctrine's ODM",
-    "knplabs/knp-paginator-bundle": "to use with Knp Paginator bundle"
+    "knplabs/knp-paginator-bundle": "to use with Knp Paginator bundle",
+    "symfony/form": "to use with Symfony Form component"
   },
   "config": {
     "bin-dir": "bin",
