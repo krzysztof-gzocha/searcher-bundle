@@ -30,8 +30,6 @@ before_script:
 
 script:
   - composer coverage
-  - if [ "${TRAVIS_PHP_VERSION}" == "7.0" ]; then composer phpmd; fi;
-
 
 after_script:
   - echo $TRAVIS_PHP_VERSION
