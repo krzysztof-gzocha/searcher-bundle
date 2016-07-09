@@ -43,7 +43,6 @@
   "scripts": {
     "test": ["phpunit tests/"],
     "cs-fix": ["php-cs-fixer fix src/"],
-    "coverage": ["phpunit tests/ --coverage-clover=coverage.clover"],
-    "phpmd": ["phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode"]
+    "coverage": ["phpunit tests/ --coverage-clover=coverage.clover"]
   }
 }
