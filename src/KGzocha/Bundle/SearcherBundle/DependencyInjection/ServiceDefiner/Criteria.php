@@ -63,7 +63,7 @@ class Criteria implements ServiceDefinerInterface
                 $definitionName,
                 $container->getDefinition($model['service'])
             );
-            self::addToCollection($container, $contextId, $definitionName);
+            self::addToCollection($container, $contextId, $model['name'], $definitionName);
 
             return $definition;
         }
@@ -72,7 +72,7 @@ class Criteria implements ServiceDefinerInterface
             $definitionName,
             new Definition($model['class'])
         );
-        self::addToCollection($container, $contextId, $definitionName);
+        self::addToCollection($container, $contextId, $model['name'], $definitionName);
 
         return $definition;
     }
@@ -115,13 +115,15 @@ class Criteria implements ServiceDefinerInterface
 
     /**
      * @param ContainerBuilder $container
-     * @param $contextId
-     * @param $name
+     * @param string           $contextId
+     * @param string           $name
+     * @param string           $definitionName
      */
     private static function addToCollection(
         ContainerBuilder $container,
         $contextId,
-        $name
+        $name,
+        $definitionName
     ) {
         $container
             ->getDefinition(sprintf(
@@ -130,7 +132,7 @@ class Criteria implements ServiceDefinerInterface
             ))
             ->addMethodCall(
                 'addNamedCriteria',
-                [$name, new Reference($name)]
+                [$name, new Reference($definitionName)]
             );
     }
 }
