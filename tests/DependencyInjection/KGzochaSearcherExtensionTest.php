@@ -2,6 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\ContextsCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
 use KGzocha\Searcher\Criteria\Collection\CriteriaCollectionInterface;
 use KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollectionInterface;
@@ -25,6 +26,8 @@ class KGzochaSearcherExtensionTest extends \PHPUnit_Framework_TestCase
 
         $extension = new KGzochaSearcherExtension();
         $extension->load($this->getMinimalConfig(), $container);
+        $container->addCompilerPass(new ContextsCompilerPass());
+        $container->compile();
 
         $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.searcher'));
         $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.builder_collection'));

@@ -8,7 +8,7 @@ This bundle is providing integration between Symfony and **[Searcher](https://gi
 *Searcher* is a library completely decoupled from any framework created in order to simplify construction of complex searching queries basing on passed criteria.
 It's basic idea is to split each searching *filter* to separate class.
 Regardless of what do you want to search: entities in MySQL, MongoDB or just files.
-Supported PHP versions: >=5.4, 7 and HHVM.
+Supported PHP versions: >=5.5, 7 and HHVM.
 
 ### Full documentation
 Full documentation can be found at [http://searcher.rtfd.io/](http://searcher.readthedocs.io/en/stable/introduction.html)
