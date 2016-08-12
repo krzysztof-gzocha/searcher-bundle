@@ -2,14 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\DependencyInjection;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaBuilderCollection;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaBuilder;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\CriteriaCollection;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Criteria;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\Searcher;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ServiceDefiner\SearchingContext;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -20,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 class KGzochaSearcherExtension extends Extension
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -8,12 +8,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
- * @package KGzocha\Bundle\SearcherBundle\Form
  */
 abstract class SearchForm extends AbstractType
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -24,7 +23,7 @@ abstract class SearchForm extends AbstractType
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -37,7 +36,7 @@ abstract class SearchForm extends AbstractType
      *
      * @param string      $criteriaName is a name of criteria
      * @param string|null $propertyName is a name of parameter inside criteria.
-     * If null $modelName will be used
+     *                                  If null $modelName will be used
      *
      * @return string
      */

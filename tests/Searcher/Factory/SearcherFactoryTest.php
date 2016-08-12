@@ -3,10 +3,8 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\Searcher\Factory;
 
 use KGzocha\Bundle\SearcherBundle\Searcher\Factory\SearcherFactory;
-use KGzocha\Bundle\SearcherBundle\Test\SearchingContextStub;
+use KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\SearchingContextStub;
 use KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection;
-use KGzocha\Searcher\Event\Dispatcher\EventDispatcherInterface;
-use KGzocha\Searcher\FilterImposer\Collection\FilterImposerCollection;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>

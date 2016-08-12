@@ -43,3 +43,6 @@
 
 .php_cs.cache
 composer.lock
+
+/coverage
+humbuglog.txt

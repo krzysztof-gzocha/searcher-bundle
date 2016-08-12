@@ -2,7 +2,14 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection;
 
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\ContextsCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCollectionCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCollectionCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearcherCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearchingContextCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
 use KGzocha\Searcher\Criteria\Collection\CriteriaCollectionInterface;
 use KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollectionInterface;
@@ -21,12 +28,12 @@ class KGzochaSearcherExtensionTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
         $container->setDefinition(
             'my_context',
-            new Definition('\KGzocha\Bundle\SearcherBundle\Test\SearchingContextStub', [true])
+            new Definition('\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\SearchingContextStub', [true])
         );
 
         $extension = new KGzochaSearcherExtension();
         $extension->load($this->getMinimalConfig(), $container);
-        $container->addCompilerPass(new ContextsCompilerPass());
+        $this->addCompilerPasses($container);
         $container->compile();
 
         $this->assertTrue($container->hasDefinition('k_gzocha_searcher.people.searcher'));
@@ -43,9 +50,45 @@ class KGzochaSearcherExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $criteriaCollection->getCriteria());
 
         $this->assertInstanceOf(
-            '\KGzocha\Bundle\SearcherBundle\Test\SearchingContextStub',
+            '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\SearchingContextStub',
             $container->get('k_gzocha_searcher.people.context')
         );
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function addCompilerPasses(ContainerBuilder $container)
+    {
+        $validator = new ParametersValidator();
+        $builder = new DefinitionBuilder($validator);
+        $servicePrefix = 'k_gzocha_searcher';
+
+        $container->addCompilerPass(new CriteriaCollectionCompilerPass(
+            $builder,
+            $servicePrefix
+        ));
+        $container->addCompilerPass(new CriteriaBuilderCollectionCompilerPass(
+            $builder,
+            $servicePrefix
+        ));
+        $container->addCompilerPass(new CriteriaCompilerPass(
+            $builder,
+            $servicePrefix
+        ));
+        $container->addCompilerPass(new CriteriaBuilderCompilerPass(
+            $builder,
+            $servicePrefix
+        ));
+        $container->addCompilerPass(new SearchingContextCompilerPass(
+            $builder,
+            $servicePrefix
+        ));
+        $container->addCompilerPass(new SearcherCompilerPass(
+            $builder,
+            $servicePrefix,
+            $validator
+        ));
     }
 
     /**
