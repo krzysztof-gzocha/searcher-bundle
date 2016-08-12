@@ -3,9 +3,9 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCollectionCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
-use Symfony\Component\Config\Definition\Exception\InvalidDefinitionException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -17,12 +17,12 @@ class CriteriaBuilderCollectionCompilerPassTest extends \PHPUnit_Framework_TestC
 {
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidDefinitionException
-     * @expectedExceptionMessageRegExp /^Service "non-existing-service" configured in searching context "people" does not exist/
+     * @expectedExceptionMessageRegExp /^Could not create \".+\" service, because configured service \"non-existing-service\" does not exist\.$/
      */
     public function testWithWrongService()
     {
         $compiler = new CriteriaBuilderCollectionCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $container = $this->getContainer($this->getConfig(
@@ -35,7 +35,7 @@ class CriteriaBuilderCollectionCompilerPassTest extends \PHPUnit_Framework_TestC
     public function testCompilingWithClass()
     {
         $compiler = new CriteriaBuilderCollectionCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $class = '\KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
@@ -56,7 +56,7 @@ class CriteriaBuilderCollectionCompilerPassTest extends \PHPUnit_Framework_TestC
     public function testCompilingWithDefaults()
     {
         $compiler = new CriteriaBuilderCollectionCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $class = '\KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
@@ -75,7 +75,7 @@ class CriteriaBuilderCollectionCompilerPassTest extends \PHPUnit_Framework_TestC
     public function testCompilingWithServiceName()
     {
         $compiler = new CriteriaBuilderCollectionCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $class = '\KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';

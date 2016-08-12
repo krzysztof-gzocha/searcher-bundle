@@ -6,6 +6,7 @@ use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuild
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCollectionCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearcherCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearchingContextCompilerPass;
@@ -60,31 +61,33 @@ class KGzochaSearcherExtensionTest extends \PHPUnit_Framework_TestCase
     private function addCompilerPasses(ContainerBuilder $container)
     {
         $validator = new ParametersValidator();
+        $builder = new DefinitionBuilder($validator);
         $servicePrefix = 'k_gzocha_searcher';
 
         $container->addCompilerPass(new CriteriaCollectionCompilerPass(
-            $validator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new CriteriaBuilderCollectionCompilerPass(
-            $validator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new CriteriaCompilerPass(
-            $validator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new CriteriaBuilderCompilerPass(
-            $validator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new SearchingContextCompilerPass(
-            $validator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new SearcherCompilerPass(
-            $validator,
-            $servicePrefix
+            $builder,
+            $servicePrefix,
+            $validator
         ));
     }
 

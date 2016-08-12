@@ -4,6 +4,7 @@ namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCollectionCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
 use KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection;
@@ -19,7 +20,7 @@ class CriteriaCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingWithClass()
     {
         $compiler = new CriteriaCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $container = $this->getContainer($this->getConfig());
@@ -60,7 +61,7 @@ class CriteriaCompilerPassTest extends \PHPUnit_Framework_TestCase
         $extension = new KGzochaSearcherExtension();
         $extension->load($config, $container);
         $container->addCompilerPass(new CriteriaCollectionCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         ));
 

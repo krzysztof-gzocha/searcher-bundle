@@ -4,7 +4,6 @@ namespace KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass;
 
 use Symfony\Component\Config\Definition\Exception\InvalidDefinitionException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -48,7 +47,6 @@ class CriteriaCompilerPass extends AbstractCompilerPass
         array &$criteria,
         ContainerBuilder $container
     ) {
-        $this->validateParameters($contextId, $criteria);
         $definitionName = $this->buildServiceName(
             $contextId,
             sprintf('%s.%s', self::CRITERIA_PARAMETER, $criteria[self::NAME_PARAMETER])
@@ -57,38 +55,5 @@ class CriteriaCompilerPass extends AbstractCompilerPass
         $this->buildDefinition($container, $contextId, $definitionName, $criteria);
 
         return $definitionName;
-    }
-
-    /**
-     * @param ContainerBuilder $container
-     * @param string           $contextId
-     * @param string           $definitionName
-     * @param array            $criteria
-     *
-     * @return Definition
-     */
-    private function buildDefinition(
-        ContainerBuilder $container,
-        $contextId,
-        $definitionName,
-        array &$criteria
-    ) {
-        if (isset($criteria[self::SERVICE_PARAMETER])) {
-            $this->checkIfServiceExists(
-                $container,
-                $contextId,
-                $criteria[self::SERVICE_PARAMETER]
-            );
-
-            return $container->setDefinition(
-                $definitionName,
-                $container->getDefinition($criteria[self::SERVICE_PARAMETER])
-            );
-        }
-
-        return $container->setDefinition(
-            $definitionName,
-            new Definition($criteria[self::CLASS_PARAMETER])
-        );
     }
 }

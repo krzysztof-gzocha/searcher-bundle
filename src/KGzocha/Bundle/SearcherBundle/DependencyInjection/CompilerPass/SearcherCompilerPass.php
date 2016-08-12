@@ -12,6 +12,25 @@ use Symfony\Component\DependencyInjection\Definition;
 class SearcherCompilerPass extends AbstractCompilerPass
 {
     /**
+     * @var ParametersValidator
+     */
+    private $parametersValidator;
+
+    /**
+     * @param DefinitionBuilder   $definitionBuilder
+     * @param string              $servicePrefix
+     * @param ParametersValidator $parametersValidator
+     */
+    public function __construct(
+        DefinitionBuilder $definitionBuilder,
+        $servicePrefix,
+        ParametersValidator $parametersValidator
+    ) {
+        parent::__construct($definitionBuilder, $servicePrefix);
+        $this->parametersValidator = $parametersValidator;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function processContext(
@@ -20,7 +39,7 @@ class SearcherCompilerPass extends AbstractCompilerPass
         ContainerBuilder $container
     ) {
         $config = $context[self::SEARCHER_PARAMETER];
-        $this->validateParameters($contextId, $config);
+        $this->parametersValidator->validateParameters($contextId, $config);
 
         if (isset($config[self::SERVICE_PARAMETER])) {
             return $this->createFromService($container, $contextId, $config);

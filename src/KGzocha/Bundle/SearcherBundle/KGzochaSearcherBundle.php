@@ -6,6 +6,7 @@ use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuild
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCollectionCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearcherCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearchingContextCompilerPass;
@@ -24,31 +25,33 @@ class KGzochaSearcherBundle extends Bundle
     {
         parent::build($container);
         $parametersValidator = new ParametersValidator();
+        $builder = new DefinitionBuilder($parametersValidator);
         $servicePrefix = $this->getContainerExtension()->getAlias();
 
         $container->addCompilerPass(new CriteriaCollectionCompilerPass(
-            $parametersValidator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new CriteriaBuilderCollectionCompilerPass(
-            $parametersValidator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new CriteriaBuilderCompilerPass(
-            $parametersValidator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new CriteriaCompilerPass(
-            $parametersValidator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new SearchingContextCompilerPass(
-            $parametersValidator,
+            $builder,
             $servicePrefix
         ));
         $container->addCompilerPass(new SearcherCompilerPass(
-            $parametersValidator,
-            $servicePrefix
+            $builder,
+            $servicePrefix,
+            $parametersValidator
         ));
     }
 }

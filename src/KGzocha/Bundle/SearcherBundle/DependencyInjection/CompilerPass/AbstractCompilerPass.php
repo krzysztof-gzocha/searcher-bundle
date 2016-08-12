@@ -23,9 +23,9 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
     const WRAPPER_CLASS_PARAMETER = 'wrapper_class';
 
     /**
-     * @var ParametersValidator
+     * @var DefinitionBuilder
      */
-    private $parametersValidator;
+    private $definitionBuilder;
 
     /**
      * @var string
@@ -33,14 +33,12 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
     private $servicePrefix;
 
     /**
-     * @param ParametersValidator $parametersValidator
-     * @param string              $servicePrefix
+     * @param DefinitionBuilder $definitionBuilder
+     * @param string            $servicePrefix
      */
-    public function __construct(
-        ParametersValidator $parametersValidator,
-        $servicePrefix
-    ) {
-        $this->parametersValidator = $parametersValidator;
+    public function __construct(DefinitionBuilder $definitionBuilder, $servicePrefix)
+    {
+        $this->definitionBuilder = $definitionBuilder;
         $this->servicePrefix = $servicePrefix;
     }
 
@@ -85,20 +83,27 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
     }
 
     /**
-     * @param string $contextId
-     * @param array  $config
+     * @param ContainerBuilder $container
+     * @param string           $contextId
+     * @param string           $definitionName
+     * @param array            $config
      *
-     * @return bool
-     *
-     * @throws InvalidDefinitionException
+     * @return \Symfony\Component\DependencyInjection\Definition
      */
-    protected function validateParameters(
+    protected function buildDefinition(
+        ContainerBuilder $container,
         $contextId,
+        $definitionName,
         array &$config
     ) {
         return $this
-            ->parametersValidator
-            ->validateParameters($contextId, $config);
+            ->definitionBuilder
+            ->buildDefinition(
+                $container,
+                $contextId,
+                $definitionName,
+                $config
+            );
     }
 
     /**

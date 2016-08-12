@@ -3,6 +3,7 @@
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCollectionCompilerPass;
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearcherCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearchingContextCompilerPass;
@@ -19,8 +20,9 @@ class SearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingAsDefaults()
     {
         $compiler = new SearcherCompilerPass(
-            new ParametersValidator(),
-            'k_gzocha_searcher'
+            new DefinitionBuilder(new ParametersValidator()),
+            'k_gzocha_searcher',
+            new ParametersValidator()
         );
         $container = $this->getContainer($this->getConfig());
         $container->addCompilerPass($compiler);
@@ -40,8 +42,9 @@ class SearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingAsService()
     {
         $compiler = new SearcherCompilerPass(
-            new ParametersValidator(),
-            'k_gzocha_searcher'
+            new DefinitionBuilder(new ParametersValidator()),
+            'k_gzocha_searcher',
+            new ParametersValidator()
         );
         $container = $this->getContainer($this->getConfig([
             'service' => 'searcher_service',
@@ -71,8 +74,9 @@ class SearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingAsClass($class)
     {
         $compiler = new SearcherCompilerPass(
-            new ParametersValidator(),
-            'k_gzocha_searcher'
+            new DefinitionBuilder(new ParametersValidator()),
+            'k_gzocha_searcher',
+            new ParametersValidator()
         );
         $container = $this->getContainer($this->getConfig([
             'class' => $class,
@@ -98,8 +102,9 @@ class SearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingWithoutWrapperClass($class)
     {
         $compiler = new SearcherCompilerPass(
-            new ParametersValidator(),
-            'k_gzocha_searcher'
+            new DefinitionBuilder(new ParametersValidator()),
+            'k_gzocha_searcher',
+            new ParametersValidator()
         );
         $container = $this->getContainer($this->getConfig([
             'class' => $class,
@@ -139,11 +144,11 @@ class SearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
         $extension = new KGzochaSearcherExtension();
         $extension->load($config, $container);
         $container->addCompilerPass(new CriteriaBuilderCollectionCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         ));
         $container->addCompilerPass(new SearchingContextCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         ));
         $container->setDefinition(

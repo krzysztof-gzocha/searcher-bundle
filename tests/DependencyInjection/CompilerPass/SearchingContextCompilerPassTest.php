@@ -2,9 +2,9 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ParametersValidator;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearchingContextCompilerPass;
-use KGzocha\Bundle\SearcherBundle\DependencyInjection\Configuration;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\KGzochaSearcherExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -18,7 +18,7 @@ class SearchingContextCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingAsService()
     {
         $compiler = new SearchingContextCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $container = $this->getContainer($this->getConfig([
@@ -41,7 +41,7 @@ class SearchingContextCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testCompilingAsClass()
     {
         $compiler = new SearchingContextCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         );
         $container = $this->getContainer($this->getConfig([
@@ -68,7 +68,7 @@ class SearchingContextCompilerPassTest extends \PHPUnit_Framework_TestCase
         $extension = new KGzochaSearcherExtension();
         $extension->load($config, $container);
         $container->addCompilerPass(new SearchingContextCompilerPass(
-            new ParametersValidator(),
+            new DefinitionBuilder(new ParametersValidator()),
             'k_gzocha_searcher'
         ));
 
