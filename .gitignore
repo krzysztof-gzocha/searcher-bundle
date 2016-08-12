@@ -38,8 +38,6 @@
 
 # Composer PHAR
 /composer.phar
-.idea
-.idea/
 
 .php_cs.cache
 composer.lock
