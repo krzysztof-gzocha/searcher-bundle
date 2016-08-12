@@ -68,6 +68,23 @@ class SearcherCompilerPassTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidDefinitionException
+     */
+    public function testCompilingWithMissingService()
+    {
+        $compiler = new SearcherCompilerPass(
+            new DefinitionBuilder(new ParametersValidator()),
+            'k_gzocha_searcher',
+            new ParametersValidator()
+        );
+        $container = $this->getContainer($this->getConfig([
+            'service' => 'missing_service',
+        ]));
+        $container->addCompilerPass($compiler);
+        $container->compile();
+    }
+
+    /**
      * @param $class
      * @dataProvider searcherClassDataProvider
      */
