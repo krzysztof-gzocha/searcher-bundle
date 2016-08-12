@@ -115,14 +115,12 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
         $contextId,
         $serviceName
     ) {
-        if ($container->hasDefinition($serviceName)) {
-            return true;
+        if (!$container->hasDefinition($serviceName)) {
+            throw new InvalidDefinitionException(sprintf(
+                'Service "%s" configured in searching context "%s" does not exist',
+                $serviceName,
+                $contextId
+            ));
         }
-
-        throw new InvalidDefinitionException(sprintf(
-            'Service "%s" configured in searching context "%s" does not exist',
-            $serviceName,
-            $contextId
-        ));
     }
 }

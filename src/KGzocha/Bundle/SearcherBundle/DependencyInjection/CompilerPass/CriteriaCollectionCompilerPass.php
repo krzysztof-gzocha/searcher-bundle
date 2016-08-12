@@ -19,7 +19,7 @@ class CriteriaCollectionCompilerPass extends AbstractCompilerPass
         ContainerBuilder $container
     ) {
         $config = $context[self::CRITERIA_COLLECTION_PARAMETER];
-        $this->validateParameters($context, $config);
+        $this->validateParameters($contextId, $config);
 
         // Service has higher priority than class parameter
         if (isset($config[self::SERVICE_PARAMETER])) {
