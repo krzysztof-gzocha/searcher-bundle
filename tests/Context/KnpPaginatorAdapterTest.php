@@ -16,7 +16,7 @@ class KnpPaginatorAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $queryBuilder = $this->getQueryBuilder();
         $page = 5;
-        $limit =26;
+        $limit = 26;
         $options = ['some' => 'options'];
 
         $searchingContext = new QueryBuilderSearchingContext(

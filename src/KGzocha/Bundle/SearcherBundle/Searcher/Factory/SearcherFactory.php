@@ -8,12 +8,11 @@ use KGzocha\Searcher\Searcher;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
- * @package KGzocha\Bundle\SearcherBundle\Searcher\Factory
  */
 class SearcherFactory implements SearcherFactoryInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function build(
         CriteriaBuilderCollectionInterface $builderCollection,

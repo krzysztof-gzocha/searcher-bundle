@@ -8,7 +8,6 @@ use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
- * @package KGzocha\Bundle\SearcherBundle\Context
  */
 class KnpPaginatorAdapter implements SearchingContextInterface
 {
@@ -38,7 +37,7 @@ class KnpPaginatorAdapter implements SearchingContextInterface
     private $options;
 
     /**
-     * @param PaginatorInterface $paginator
+     * @param PaginatorInterface           $paginator
      * @param QueryBuilderSearchingContext $searchingContext
      */
     public function __construct(
@@ -53,7 +52,7 @@ class KnpPaginatorAdapter implements SearchingContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getQueryBuilder()
     {
@@ -61,7 +60,7 @@ class KnpPaginatorAdapter implements SearchingContextInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getResults()
     {

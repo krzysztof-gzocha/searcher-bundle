@@ -8,7 +8,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
- * @package KGzocha\Bundle\SearcherBundle\DependencyInjection
  */
 class Configuration implements ConfigurationInterface
 {
@@ -18,7 +17,7 @@ class Configuration implements ConfigurationInterface
     const BUILDER_COLLECTION_CLASS = 'KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
