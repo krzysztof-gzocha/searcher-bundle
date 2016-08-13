@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Definition;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-class SearcherCompilerPass extends AbstractCompilerPass
+class SearcherCompilerPass extends AbstractContextCompilerPass
 {
     /**
      * @var ParametersValidator

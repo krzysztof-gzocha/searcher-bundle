@@ -15,6 +15,8 @@ class Configuration implements ConfigurationInterface
     const WRAPPER_CLASS = 'KGzocha\Searcher\WrappedResultsSearcher';
     const CRITERIA_COLLECTION_CLASS = 'KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection';
     const BUILDER_COLLECTION_CLASS = 'KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
+    const END_TRANSFORMER_CLASS = 'KGzocha\Searcher\Chain\EndTransformer';
+    const CHAIN_SEARCHER_CLASS = 'KGzocha\Searcher\Chain\ChainSearch';
 
     /**
      * {@inheritdoc}
@@ -27,21 +29,55 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->canBeUnset(true)
             ->children()
-                ->arrayNode('contexts')
-                ->canBeUnset(true)
-                ->useAttributeAsKey('context_id')
-                ->prototype('array')
-                ->children()
+                ->append($this->getContextsNode())
+                ->append($this->getChainsNode())
+            ->end();
+
+        return $treeBuilder;
+    }
+
+    /**
+     * @return ArrayNodeDefinition
+     */
+    protected function getContextsNode()
+    {
+        $node = new ArrayNodeDefinition('contexts');
+
+        $node
+            ->useAttributeAsKey('context_id')
+            ->prototype('array')
+            ->canBeUnset(true)
+            ->children()
                     ->append($this->getCriteriaCollectionNode())
                     ->append($this->getBuilderCollectionNode())
                     ->append($this->getCriteriaNode())
                     ->append($this->getBuildersNode())
                     ->append($this->getSearcher())
-                    ->append($this->getContextNode())
+                    ->append($this->getSearchingContextNode())
                 ->end()
             ->end();
 
-        return $treeBuilder;
+        return $node;
+    }
+
+    /**
+     * @return ArrayNodeDefinition
+     */
+    protected function getChainsNode()
+    {
+        $node = new ArrayNodeDefinition('chains');
+
+        $node
+            ->useAttributeAsKey('chain_id')
+            ->prototype('array')
+            ->canBeUnset(true)
+            ->children()
+                ->append($this->getChainSearcherNode())
+                ->append($this->getTransformersNode())
+                ->append($this->getCellsNode())
+            ->end();
+
+        return $node;
     }
 
     /**
@@ -102,7 +138,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @return ArrayNodeDefinition
      */
-    protected function getContextNode()
+    protected function getSearchingContextNode()
     {
         $node = new ArrayNodeDefinition('context');
 
@@ -148,6 +184,60 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('class')->defaultValue(null)->end()
                 ->scalarNode('service')->defaultValue(null)->end()
                 ->scalarNode('name')->cannotBeEmpty()->isRequired()->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * @return ArrayNodeDefinition
+     */
+    protected function getChainSearcherNode()
+    {
+        $node = new ArrayNodeDefinition('chain_searcher');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->scalarNode('class')->defaultValue(self::CHAIN_SEARCHER_CLASS)->end()
+                ->scalarNode('service')->defaultValue(null)->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * @return ArrayNodeDefinition
+     */
+    protected function getTransformersNode()
+    {
+        $node = new ArrayNodeDefinition('transformers');
+
+        $node
+            ->prototype('array')
+            ->children()
+                ->scalarNode('name')->cannotBeEmpty()->isRequired()->end()
+                ->scalarNode('service')->defaultValue(null)->end()
+                ->scalarNode('class')->defaultValue(null)->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * @return ArrayNodeDefinition
+     */
+    protected function getCellsNode()
+    {
+        $node = new ArrayNodeDefinition('cells');
+
+        $node
+            ->prototype('array')
+            ->children()
+                ->scalarNode('name')->cannotBeEmpty()->isRequired()->end()
+                ->scalarNode('searcher')->cannotBeEmpty()->isRequired()->end()
+                ->scalarNode('transformer')->defaultValue(self::END_TRANSFORMER_CLASS)->end()
             ->end();
 
         return $node;

@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-class SearchingContextCompilerPass extends AbstractCompilerPass
+class SearchingContextCompilerPass extends AbstractContextCompilerPass
 {
     /**
      * {@inheritdoc}

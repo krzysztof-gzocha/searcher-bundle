@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-abstract class AbstractCompilerPass implements CompilerPassInterface
+abstract class AbstractContextCompilerPass implements CompilerPassInterface
 {
     const CLASS_PARAMETER = 'class';
     const SERVICE_PARAMETER = 'service';

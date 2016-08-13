@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-class CriteriaCompilerPass extends AbstractCompilerPass
+class CriteriaCompilerPass extends AbstractContextCompilerPass
 {
     /**
      * {@inheritdoc}
