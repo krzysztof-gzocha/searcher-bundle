@@ -33,12 +33,12 @@ class SearcherCompilerPass extends AbstractContextCompilerPass
     /**
      * {@inheritdoc}
      */
-    protected function processContext(
+    protected function processParam(
         $contextId,
-        array &$context,
+        array &$paramConfig,
         ContainerBuilder $container
     ) {
-        $config = $context[self::SEARCHER_PARAMETER];
+        $config = $paramConfig[self::SEARCHER_PARAMETER];
         $this->parametersValidator->validateParameters($contextId, $config);
 
         if (isset($config[self::SERVICE_PARAMETER])) {

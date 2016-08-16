@@ -12,16 +12,16 @@ class CriteriaCollectionCompilerPass extends AbstractContextCompilerPass
     /**
      * {@inheritdoc}
      */
-    protected function processContext(
+    protected function processParam(
         $contextId,
-        array &$context,
+        array &$paramConfig,
         ContainerBuilder $container
     ) {
         return $this->buildDefinition(
             $container,
             $contextId,
             $this->buildServiceName($contextId, self::CRITERIA_COLLECTION_PARAMETER),
-            $context[self::CRITERIA_COLLECTION_PARAMETER]
+            $paramConfig[self::CRITERIA_COLLECTION_PARAMETER]
         );
     }
 }

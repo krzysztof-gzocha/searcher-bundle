@@ -43,6 +43,7 @@
   "scripts": {
     "test": ["phpunit tests/"],
     "cs-fix": ["php-cs-fixer fix src/"],
-    "coverage": ["phpunit tests/ --coverage-clover=coverage.clover"]
+    "coverage": ["phpunit tests/ --coverage-clover=coverage.clover"],
+    "coverage-html": ["phpunit tests/ --coverage-html coverage/", "open coverage/index.html"]
   }
 }

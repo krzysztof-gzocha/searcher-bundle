@@ -17,6 +17,7 @@ class Configuration implements ConfigurationInterface
     const BUILDER_COLLECTION_CLASS = 'KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
     const END_TRANSFORMER_CLASS = 'KGzocha\Searcher\Chain\EndTransformer';
     const CHAIN_SEARCHER_CLASS = 'KGzocha\Searcher\Chain\ChainSearch';
+    const CELL_CLASS = '\KGzocha\Searcher\Chain\Cell';
 
     /**
      * {@inheritdoc}
@@ -238,6 +239,8 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('name')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('searcher')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('transformer')->defaultValue(self::END_TRANSFORMER_CLASS)->end()
+                ->scalarNode('class')->defaultValue(self::CELL_CLASS)->end()
+                ->scalarNode('service')->defaultValue(null)->end()
             ->end();
 
         return $node;

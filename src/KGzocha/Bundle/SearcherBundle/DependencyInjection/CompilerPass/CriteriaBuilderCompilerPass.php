@@ -14,12 +14,12 @@ class CriteriaBuilderCompilerPass extends AbstractContextCompilerPass
     /**
      * {@inheritdoc}
      */
-    protected function processContext(
+    protected function processParam(
         $contextId,
-        array &$context,
+        array &$paramConfig,
         ContainerBuilder $container
     ) {
-        foreach ($context['builders'] as &$builder) {
+        foreach ($paramConfig['builders'] as &$builder) {
             $definitionName = $this->processCriteriaBuilder($contextId, $builder, $container);
 
             $criteriaCollection = $this

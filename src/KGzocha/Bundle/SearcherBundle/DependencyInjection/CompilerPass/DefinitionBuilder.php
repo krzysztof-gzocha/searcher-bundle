@@ -105,10 +105,12 @@ class DefinitionBuilder
                 $className
             ));
         }
+        $definition = new Definition($className);
+        $definition->setLazy(true);
 
         return $container->setDefinition(
             $definitionName,
-            new Definition($className)
+            $definition
         );
     }
 }
