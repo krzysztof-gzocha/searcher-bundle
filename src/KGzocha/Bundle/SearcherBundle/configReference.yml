@@ -50,17 +50,14 @@ k_gzocha_searcher:
 
       # at least two are required
       cells:
-        - {
-            name: peopleCell,
-            searcher: people,
-            transformer: peopleIdToLogId,
-            class: \KGzocha\Searcher\Chain\Cell,  # optional
-            service: cell_service_1               # optional
-          }
-        - {
-            name: logCell,
-            searcher: logs,
-            transformer: ~,                       # EndTransformer will be used
-            class: \KGzocha\Searcher\Chain\Cell,  # optional
-            service: cell_service_2               # optional
-          }
+        - name: peopleCell
+          searcher: people
+          transformer: peopleIdToLogId
+          class: \KGzocha\Searcher\Chain\Cell   # optional
+          service: cell_service_1               # optional
+
+        - name: logCell
+          searcher: logs
+          transformer: ~                        # EndTransformer will be used
+          class: \KGzocha\Searcher\Chain\Cell   # optional
+          service: cell_service_2               # optional
