@@ -57,20 +57,7 @@ class CellCompilerPass extends AbstractChainsCompilerPass
             return $definition;
         }
 
-        // Add searcher as first argument
-        $definition->addArgument($container->getDefinition(
-            $this->buildServiceName($cellConfig[self::SEARCHER_PARAMETER], self::SEARCHER_PARAMETER)
-        ));
-
-        // Add transformer as second argument
-        $definition->addArgument($this->getTransformerDefinition(
-            $container, $contextId, $cellConfig
-        ));
-
-        // Add cell name as third argument
-        $definition->addArgument($cellConfig[self::NAME_PARAMETER]);
-
-        return $definition;
+        return $this->configureDefinition($contextId, $cellConfig, $container, $definition);
     }
 
     /**
@@ -97,5 +84,35 @@ class CellCompilerPass extends AbstractChainsCompilerPass
                 $cellConfig[self::TRANSFORMER_PARAMETER]
             )
         ));
+    }
+
+    /**
+     * @param                  $contextId
+     * @param array            $cellConfig
+     * @param ContainerBuilder $container
+     * @param Definition       $definition
+     *
+     * @return Definition
+     */
+    private function configureDefinition(
+        $contextId,
+        array &$cellConfig,
+        ContainerBuilder $container,
+        Definition $definition
+    ) {
+        // Add searcher as first argument
+        $definition->addArgument($container->getDefinition(
+            $this->buildServiceName($cellConfig[self::SEARCHER_PARAMETER], self::SEARCHER_PARAMETER)
+        ));
+
+        // Add transformer as second argument
+        $definition->addArgument($this->getTransformerDefinition(
+            $container, $contextId, $cellConfig
+        ));
+
+        // Add cell name as third argument
+        $definition->addArgument($cellConfig[self::NAME_PARAMETER]);
+
+        return $definition;
     }
 }
