@@ -15,7 +15,7 @@ class TransformerStub implements TransformerInterface
      */
     public function transform($results, CriteriaCollectionInterface $criteria)
     {
-        return $results;
+        return $criteria;
     }
 
     /**

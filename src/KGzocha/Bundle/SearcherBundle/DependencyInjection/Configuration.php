@@ -45,9 +45,9 @@ class Configuration implements ConfigurationInterface
         $node = new ArrayNodeDefinition('contexts');
 
         $node
+            ->canBeUnset(true)
             ->useAttributeAsKey('context_id')
             ->prototype('array')
-            ->canBeUnset(true)
             ->children()
                     ->append($this->getCriteriaCollectionNode())
                     ->append($this->getBuilderCollectionNode())
@@ -69,9 +69,9 @@ class Configuration implements ConfigurationInterface
         $node = new ArrayNodeDefinition('chains');
 
         $node
+            ->canBeUnset(true)
             ->useAttributeAsKey('chain_id')
             ->prototype('array')
-            ->canBeUnset(true)
             ->children()
                 ->append($this->getChainSearcherNode())
                 ->append($this->getTransformersNode())
@@ -238,7 +238,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('name')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('searcher')->cannotBeEmpty()->isRequired()->end()
-                ->scalarNode('transformer')->defaultValue(self::END_TRANSFORMER_CLASS)->end()
+                ->scalarNode('transformer')->defaultNull()->end()
                 ->scalarNode('class')->defaultValue(self::CELL_CLASS)->end()
                 ->scalarNode('service')->defaultValue(null)->end()
             ->end();
