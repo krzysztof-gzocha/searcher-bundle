@@ -7,6 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
+ * @group di
+ * @group bundle
  */
 class KGzochaSearcherBundleTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +19,7 @@ class KGzochaSearcherBundleTest extends \PHPUnit_Framework_TestCase
 
         $bundle->build($container);
         $compilerPasses = $container->getCompilerPassConfig()->getBeforeOptimizationPasses();
-        $this->assertCount(6, $compilerPasses);
+        $this->assertCount(9, $compilerPasses);
         $requiredCompilerPasses = [
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCollectionCompilerPass',
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCollectionCompilerPass',
@@ -25,6 +27,9 @@ class KGzochaSearcherBundleTest extends \PHPUnit_Framework_TestCase
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCompilerPass',
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearchingContextCompilerPass',
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\SearcherCompilerPass',
+            '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\TransformerCompilerPass',
+            '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ChainSearchCompilerPass',
+            '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCompilerPass',
         ];
 
         foreach ($requiredCompilerPasses as $requiredCompilerPass) {

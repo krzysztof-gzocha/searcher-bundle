@@ -7,21 +7,24 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-class SearchingContextCompilerPass extends AbstractContextCompilerPass
+class ChainSearchCompilerPass extends AbstractChainsCompilerPass
 {
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     protected function processParam(
         $contextId,
         array &$paramConfig,
         ContainerBuilder $container
     ) {
-        return $this->buildDefinition(
+        $this->buildDefinition(
             $container,
             $contextId,
-            $this->buildServiceName($contextId, self::CONTEXT_PARAMETER),
-            $paramConfig[self::CONTEXT_PARAMETER]
+            $this->buildChainServiceName(
+                $contextId,
+                self::SEARCHER_PARAMETER
+            ),
+            $paramConfig['chain_searcher']
         );
     }
 }

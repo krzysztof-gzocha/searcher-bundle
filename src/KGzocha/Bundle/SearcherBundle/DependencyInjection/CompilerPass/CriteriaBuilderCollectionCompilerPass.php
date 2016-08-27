@@ -7,21 +7,21 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-class CriteriaBuilderCollectionCompilerPass extends AbstractCompilerPass
+class CriteriaBuilderCollectionCompilerPass extends AbstractContextCompilerPass
 {
     /**
      * {@inheritdoc}
      */
-    protected function processContext(
+    protected function processParam(
         $contextId,
-        array &$context,
+        array &$paramConfig,
         ContainerBuilder $container
     ) {
         return $this->buildDefinition(
             $container,
             $contextId,
             $this->buildServiceName($contextId, self::BUILDER_COLLECTION_PARAMETER),
-            $context[self::BUILDER_COLLECTION_PARAMETER]
+            $paramConfig[self::BUILDER_COLLECTION_PARAMETER]
         );
     }
 }

@@ -108,7 +108,22 @@ class DefinitionBuilder
 
         return $container->setDefinition(
             $definitionName,
-            new Definition($className)
+            $this->getDefinition($className)
         );
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return Definition
+     */
+    private function getDefinition($className)
+    {
+        $definition = new Definition($className);
+        if (method_exists($definition, 'setLazy')) {
+            $definition->setLazy(true);
+        }
+
+        return $definition;
     }
 }

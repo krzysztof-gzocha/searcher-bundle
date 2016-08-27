@@ -9,11 +9,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-abstract class AbstractCompilerPass implements CompilerPassInterface
+abstract class AbstractContextCompilerPass implements CompilerPassInterface
 {
     const CLASS_PARAMETER = 'class';
     const SERVICE_PARAMETER = 'service';
     const NAME_PARAMETER = 'name';
+    const TRANSFORMER_PARAMETER = 'transformer';
 
     const CRITERIA_COLLECTION_PARAMETER = 'criteria_collection';
     const BUILDER_COLLECTION_PARAMETER = 'builder_collection';
@@ -30,7 +31,7 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
     /**
      * @var string
      */
-    private $servicePrefix;
+    protected $servicePrefix;
 
     /**
      * @param DefinitionBuilder $definitionBuilder
@@ -47,24 +48,32 @@ abstract class AbstractCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $contextParam = 'k_gzocha_searcher.contexts';
-        $contexts = $container->getParameter($contextParam);
+        $param = sprintf('%s.%s', $this->servicePrefix, $this->getParamToBeProcessed());
+        $contexts = $container->getParameter($param);
 
         foreach ($contexts as $contextId => &$context) {
-            $this->processContext($contextId, $context, $container);
+            $this->processParam($contextId, $context, $container);
         }
     }
 
     /**
      * @param string           $contextId
-     * @param array            $context
+     * @param array            $paramConfig
      * @param ContainerBuilder $container
      */
-    abstract protected function processContext(
+    abstract protected function processParam(
         $contextId,
-        array &$context,
+        array &$paramConfig,
         ContainerBuilder $container
     );
+
+    /**
+     * @return string
+     */
+    protected function getParamToBeProcessed()
+    {
+        return 'contexts';
+    }
 
     /**
      * @param string $contextId

@@ -31,6 +31,8 @@ class CriteriaCompilerPassTest extends \PHPUnit_Framework_TestCase
         );
         $container->compile();
 
+        $this->assertTrue($container->has('k_gzocha_searcher.people.criteria_collection'));
+
         /** @var NamedCriteriaCollection $criteriaCollection */
         $criteriaCollection = $container->get('k_gzocha_searcher.people.criteria_collection');
         $this->assertCount(3, $criteriaCollection);

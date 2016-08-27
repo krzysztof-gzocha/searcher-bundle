@@ -23,6 +23,7 @@ class KGzochaSearcherExtension extends Extension
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $container->setParameter('k_gzocha_searcher.contexts', $config['contexts']);
+        $container->setParameter('k_gzocha_searcher.chains', $config['chains']);
         $loader->load('services.yml');
     }
 }

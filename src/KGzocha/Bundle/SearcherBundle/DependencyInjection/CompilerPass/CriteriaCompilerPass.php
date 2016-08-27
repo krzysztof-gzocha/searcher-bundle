@@ -9,17 +9,17 @@ use Symfony\Component\DependencyInjection\Reference;
 /**
  * @author Krzysztof Gzocha <krzysztof@propertyfinder.ae>
  */
-class CriteriaCompilerPass extends AbstractCompilerPass
+class CriteriaCompilerPass extends AbstractContextCompilerPass
 {
     /**
      * {@inheritdoc}
      */
-    protected function processContext(
+    protected function processParam(
         $contextId,
-        array &$context,
+        array &$paramConfig,
         ContainerBuilder $container
     ) {
-        foreach ($context[self::CRITERIA_PARAMETER] as &$criteria) {
+        foreach ($paramConfig[self::CRITERIA_PARAMETER] as &$criteria) {
             $definitionName = $this->processCriteria($contextId, $criteria, $container);
 
             $criteriaCollection = $this

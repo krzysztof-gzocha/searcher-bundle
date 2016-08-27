@@ -175,6 +175,52 @@ Of course `ResultCollection` itself is traversable, so you can use it inside `fo
 This feature is useful in rare situations where you are not sure if your `QueryBuilder` will return array or traversable object. Returning `null` and trying to iterate over it will lead to an error. ResultCollection will prevent this kind of situation. If you want to change wrapper class then you need to specify `wrapper_class` in searcher config.
 Of course sometimes you want your Searcher to just return an integer or whatever, then you do not want to wrap your Searcher. In order to do that just specify `wrapper_class` as `null`
 
+## Chain searching
+Searcher library allows you to perform [chain searching](http://searcher.readthedocs.io/en/stable/chain-search.html) and 
+you can use with this bundle as well. All what you need to do is to properly configure it in config file and fetch
+`ChainSearch` service.
+
+Example chain searching config:  
+```yaml
+k_gzocha_searcher:
+    chains:
+        people_log:
+    
+          # optional
+          chain_searcher:
+            class: \KGzocha\Searcher\Chain\ChainSearch
+            service: chain_searcher_service
+    
+          transformers:
+            - name: peopleIdToLogId 
+              service: transfomer_service
+              class: \TransformerClass
+    
+          # at least two are required
+          cells:
+            - name: peopleCell
+              searcher: people
+              transformer: peopleIdToLogId
+              class: \KGzocha\Searcher\Chain\Cell   # optional
+              service: cell_service_1               # optional
+    
+            - name: logCell
+              searcher: logs
+              transformer: ~                        # If empty EndTransformer will be used
+              class: \KGzocha\Searcher\Chain\Cell   # optional
+              service: cell_service_2               # optional
+```
+
+With above config you can easily fetch all services like this:  
+```php
+$this->get('k_gzocha_searcher.chains.people_log.searcher');         // ChainSearch service
+
+$this->get('k_gzocha_searcher.chains.people_log.cell.peopleCell');  // #1 Cell service 
+$this->get('k_gzocha_searcher.chains.people_log.cell.logCell');     // #2 Cell service
+
+$this->get('k_gzocha_searcher.chains.people_log.transformer.peopleToLogId'); // Transformer service
+```
+
 ### Contributing
 All ideas and pull request are welcomed and appreciated.
 Please, feel free to share your thought via issues.

@@ -70,7 +70,38 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                             ],
                         ],
                     ],
-                ]
+                ],
+                'chains' => [
+                    'people_log' => [
+                        'chain_searcher' => [
+                            'class' => 'KGzocha\Searcher\Chain\ChainSearch',
+                            'service' => 'chain_searcher_service',
+                        ],
+                        'transformers' => [
+                            [
+                                'name' => 'transformer',
+                                'service' => 'transformer_service',
+                                'class' => '\TransformerClass',
+                            ],
+                        ],
+                        'cells' => [
+                            [
+                                'name' => 'peopleCell',
+                                'searcher' => 'people',
+                                'transformer' => 'transformer',
+                                'service' => 'service_1',
+                                'class' => '\SomeClass',
+                            ],
+                            [
+                                'name' => 'logCell',
+                                'searcher' => 'log',
+                                'transformer' => Configuration::END_TRANSFORMER_CLASS,
+                                'service' => null,
+                                'class' => '\stdClass',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ];
     }

@@ -9,12 +9,12 @@ k_gzocha_searcher:
       # optional
       criteria_collection:
         class: KGzocha\Searcher\Criteria\Collection\NamedCriteriaCollection
-        service: model_collection_service
+        service: criteria_collection_service
 
       # optional
       builder_collection:
         class: KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection
-        service: imposer_service
+        service: criteria_builder_collection_service
 
       # optional
       searcher:
@@ -35,3 +35,29 @@ k_gzocha_searcher:
         - { class: \AgeRangeCriteriaBuilder, name: ageRange1, service: def1 }
         - { class: \AgeRangeCriteriaBuilder, name: ageRange1, service: def2 }
         - { class: \AgeRangeCriteriaBuilder, name: ageRange1, service: def3 }
+
+  # optional
+  chains:
+    people_log:
+
+      # optional
+      chain_searcher:
+        class: \KGzocha\Searcher\Chain\ChainSearch
+        service: chain_searcher_service
+
+      transformers:
+        - { name: peopleIdToLogId, service: transfomer_service, class: \TransformerClass }
+
+      # at least two are required
+      cells:
+        - name: peopleCell
+          searcher: people
+          transformer: peopleIdToLogId
+          class: \KGzocha\Searcher\Chain\Cell   # optional
+          service: cell_service_1               # optional
+
+        - name: logCell
+          searcher: logs
+          transformer: ~                        # EndTransformer will be used
+          class: \KGzocha\Searcher\Chain\Cell   # optional
+          service: cell_service_2               # optional
