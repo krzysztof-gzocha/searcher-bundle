@@ -46,25 +46,8 @@ class SearcherCompilerPass extends AbstractContextCompilerPass
         }
 
         $definition = new Definition($config[self::CLASS_PARAMETER]);
-        if (Configuration::SEARCHER_CLASS == $config[self::CLASS_PARAMETER]) {
-            $definition
-                ->addArgument($container->getDefinition(
-                    $this->buildServiceName($contextId, self::BUILDER_COLLECTION_PARAMETER)
-                ))
-                ->addArgument($container->getDefinition(
-                    $this->buildServiceName($contextId, self::CONTEXT_PARAMETER)
-                ));
-        }
-
-        if (isset($config[self::WRAPPER_CLASS_PARAMETER])) {
-            $wrapperDefinition = new Definition($config[self::WRAPPER_CLASS_PARAMETER]);
-            $wrapperDefinition->addArgument($definition);
-
-            return $container->setDefinition(
-                $this->buildServiceName($contextId, self::SEARCHER_PARAMETER),
-                $wrapperDefinition
-            );
-        }
+        $this->configureDefinition($definition, $container, $config, $contextId);
+        $definition = $this->wrapDefinition($definition, $config);
 
         return $container->setDefinition(
             $this->buildServiceName($contextId, self::SEARCHER_PARAMETER),
@@ -106,5 +89,52 @@ class SearcherCompilerPass extends AbstractContextCompilerPass
             $this->buildServiceName($contextId, self::SEARCHER_PARAMETER),
             $container->getDefinition($config[self::SERVICE_PARAMETER])
         );
+    }
+
+    /**
+     * @param Definition       $definition
+     * @param ContainerBuilder $container
+     * @param array            $config
+     * @param string           $contextId
+     *
+     * @return void
+     */
+    private function configureDefinition(
+        Definition $definition,
+        ContainerBuilder $container,
+        array &$config,
+        $contextId
+    ) {
+        if (Configuration::SEARCHER_CLASS != $config[self::CLASS_PARAMETER]) {
+            return;
+        }
+
+        $definition
+            ->addArgument($container->getDefinition(
+                $this->buildServiceName($contextId, self::BUILDER_COLLECTION_PARAMETER)
+            ))
+            ->addArgument($container->getDefinition(
+                $this->buildServiceName($contextId, self::CONTEXT_PARAMETER)
+            ));
+    }
+
+    /**
+     * @param Definition       $definition
+     * @param array            $config
+     *
+     * @return Definition
+     */
+    private function wrapDefinition(
+        Definition $definition,
+        array &$config
+    ) {
+        if (!isset($config[self::WRAPPER_CLASS_PARAMETER])) {
+            return $definition;
+        }
+
+        $wrapperDefinition = new Definition($config[self::WRAPPER_CLASS_PARAMETER]);
+        $wrapperDefinition->addArgument($definition);
+
+        return $wrapperDefinition;
     }
 }
