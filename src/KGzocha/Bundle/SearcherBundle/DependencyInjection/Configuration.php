@@ -17,7 +17,8 @@ class Configuration implements ConfigurationInterface
     const BUILDER_COLLECTION_CLASS = 'KGzocha\Searcher\CriteriaBuilder\Collection\CriteriaBuilderCollection';
     const END_TRANSFORMER_CLASS = 'KGzocha\Searcher\Chain\EndTransformer';
     const CHAIN_SEARCHER_CLASS = 'KGzocha\Searcher\Chain\ChainSearch';
-    const CELL_CLASS = '\KGzocha\Searcher\Chain\Cell';
+    const CELL_CLASS = 'KGzocha\Searcher\Chain\Cell';
+    const CELL_COLLECTION_CLASS = 'KGzocha\Searcher\Chain\Collection\CellCollection';
 
     /**
      * {@inheritdoc}
@@ -73,6 +74,7 @@ class Configuration implements ConfigurationInterface
             ->useAttributeAsKey('chain_id')
             ->prototype('array')
             ->children()
+                ->append($this->getCellCollectionNode())
                 ->append($this->getChainSearcherNode())
                 ->append($this->getTransformersNode())
                 ->append($this->getCellsNode())
@@ -241,6 +243,24 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('transformer')->defaultNull()->end()
                 ->scalarNode('class')->defaultValue(self::CELL_CLASS)->end()
                 ->scalarNode('service')->defaultValue(null)->end()
+            ->end();
+
+        return $node;
+    }
+
+    /**
+     * @return ArrayNodeDefinition
+     */
+    private function getCellCollectionNode()
+    {
+        $node = new ArrayNodeDefinition('cell_collection');
+
+        $node
+            ->addDefaultsIfNotSet()
+            ->canBeUnset()
+            ->children()
+                ->scalarNode('class')->defaultValue(self::CELL_COLLECTION_CLASS)->end()
+                ->scalarNode('service')->defaultNull()->end()
             ->end();
 
         return $node;
