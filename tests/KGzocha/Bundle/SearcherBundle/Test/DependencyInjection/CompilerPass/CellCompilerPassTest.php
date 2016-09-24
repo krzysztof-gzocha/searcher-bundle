@@ -2,6 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\CompilerPass;
 
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCollectionCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ChainSearchCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\DefinitionBuilder;
@@ -21,8 +22,8 @@ class CellCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testSuccessPath()
     {
         $compilerPass = new CellCompilerPass(
-            new DefinitionBuilder(new ParametersValidator()),
-            'k_gzocha_searcher'
+            $definitionBuilder = new DefinitionBuilder(new ParametersValidator()),
+            $prefix = 'k_gzocha_searcher'
         );
         $container = $this->getContainer($this->getConfig());
         $container->addCompilerPass($compilerPass);
@@ -58,10 +59,11 @@ class CellCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
         $extension = new KGzochaSearcherExtension();
         $extension->load($config, $container);
-        $definitionBuilder = new DefinitionBuilder($validator = new ParametersValidator());
+        $definitionBuilder = new DefinitionBuilder(new ParametersValidator());
         $prefix = 'k_gzocha_searcher';
-        $container->addCompilerPass(new ChainSearchCompilerPass($definitionBuilder, $prefix));
         $container->addCompilerPass(new TransformerCompilerPass($definitionBuilder, $prefix));
+        $container->addCompilerPass(new CellCollectionCompilerPass($definitionBuilder, $prefix));
+        $container->addCompilerPass(new ChainSearchCompilerPass($definitionBuilder, $prefix));
 
         $container->setDefinition('k_gzocha_searcher.people.searcher', new Definition(
             '\KGzocha\Bundle\SearcherBundle\Test\DependencyInjection\SearcherStub'

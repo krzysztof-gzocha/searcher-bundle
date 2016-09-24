@@ -84,6 +84,10 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
                                 'class' => '\TransformerClass',
                             ],
                         ],
+                        'cell_collection' => [
+                            'class' => 'KGzocha\Searcher\Chain\Collection\CellCollection',
+                            'service' => null,
+                        ],
                         'cells' => [
                             [
                                 'name' => 'peopleCell',

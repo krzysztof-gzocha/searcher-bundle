@@ -19,7 +19,7 @@ class KGzochaSearcherBundleTest extends \PHPUnit_Framework_TestCase
 
         $bundle->build($container);
         $compilerPasses = $container->getCompilerPassConfig()->getBeforeOptimizationPasses();
-        $this->assertCount(9, $compilerPasses);
+        $this->assertCount(10, $compilerPasses);
         $requiredCompilerPasses = [
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaCollectionCompilerPass',
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCollectionCompilerPass',
@@ -30,6 +30,7 @@ class KGzochaSearcherBundleTest extends \PHPUnit_Framework_TestCase
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\TransformerCompilerPass',
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ChainSearchCompilerPass',
             '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCompilerPass',
+            '\KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCollectionCompilerPass',
         ];
 
         foreach ($requiredCompilerPasses as $requiredCompilerPass) {

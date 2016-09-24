@@ -2,6 +2,7 @@
 
 namespace KGzocha\Bundle\SearcherBundle;
 
+use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCollectionCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CellCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\ChainSearchCompilerPass;
 use KGzocha\Bundle\SearcherBundle\DependencyInjection\CompilerPass\CriteriaBuilderCollectionCompilerPass;
@@ -58,15 +59,19 @@ class KGzochaSearcherBundle extends Bundle
         ));
 
         // Chain search compiler passes
+        $container->addCompilerPass(new CellCompilerPass(
+            $builder,
+            $servicePrefix
+        ));
         $container->addCompilerPass(new TransformerCompilerPass(
             $builder,
             $servicePrefix
         ));
-        $container->addCompilerPass(new ChainSearchCompilerPass(
+        $container->addCompilerPass(new CellCollectionCompilerPass(
             $builder,
             $servicePrefix
         ));
-        $container->addCompilerPass(new CellCompilerPass(
+        $container->addCompilerPass(new ChainSearchCompilerPass(
             $builder,
             $servicePrefix
         ));

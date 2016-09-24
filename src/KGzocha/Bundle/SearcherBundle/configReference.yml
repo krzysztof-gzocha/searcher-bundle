@@ -41,6 +41,11 @@ k_gzocha_searcher:
     people_log:
 
       # optional
+      cell_collection:
+        class: \KGzocha\Searcher\Chain\Collection\CellCollection
+        service: cell_collection_service
+
+      # optional
       chain_searcher:
         class: \KGzocha\Searcher\Chain\ChainSearch
         service: chain_searcher_service

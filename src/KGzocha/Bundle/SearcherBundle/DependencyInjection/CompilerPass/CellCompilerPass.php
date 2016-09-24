@@ -19,17 +19,19 @@ class CellCompilerPass extends AbstractChainsCompilerPass
         array &$paramConfig,
         ContainerBuilder $container
     ) {
-        $cellDefinitions = [];
-        foreach ($paramConfig['cells'] as &$cellConfig) {
-            $cellDefinitions[] = $this->processCell($contextId, $cellConfig, $container);
-        }
-
-        $chainSearch = $container->getDefinition($this->buildChainServiceName(
+        $cellCollection = $container->getDefinition($this->buildChainServiceName(
             $contextId,
-            self::SEARCHER_PARAMETER
+            CellCollectionCompilerPass::CELL_COLLECTION
         ));
 
-        $chainSearch->addArgument($cellDefinitions);
+        foreach ($paramConfig['cells'] as &$cellConfig) {
+            $cellDefinition = $this->processCell($contextId, $cellConfig, $container);
+
+            $cellCollection->addMethodCall(
+                'addNamedCell',
+                [$cellConfig[self::NAME_PARAMETER], $cellDefinition]
+            );
+        }
     }
 
     /**
@@ -109,9 +111,6 @@ class CellCompilerPass extends AbstractChainsCompilerPass
         $definition->addArgument($this->getTransformerDefinition(
             $container, $contextId, $cellConfig
         ));
-
-        // Add cell name as third argument
-        $definition->addArgument($cellConfig[self::NAME_PARAMETER]);
 
         return $definition;
     }
